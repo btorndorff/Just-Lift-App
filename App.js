@@ -1,38 +1,94 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import dumbell from './assets/dumbell.png'; 
 
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
+        <Image source={dumbell} style={styles.logo} /> 
+        <Text style={styles.instructions}>
+          JustLift
+        </Text>
+        <TouchableOpacity 
+          onPress={() => this.props.navigation.navigate('Login')} style={styles.button_login}>
+          <Text style={styles.buttonLText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={() => this.props.navigation.navigate('Register')} style={styles.button_register}>
+          <Text style={styles.buttonRText}>Register</Text>
+        </TouchableOpacity>
+        </LinearGradient>
+      </View>
+    );
+  }
+}
 
-export default function App() {
+class LoginScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Login Screen</Text>
+        <TouchableOpacity 
+          onPress={() => this.props.navigation.navigate('Login')} style={styles.button_login}>
+          <Text style={styles.buttonLText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={() => this.props.navigation.navigate('Home')} style={styles.button_login}>
+          <Text style={styles.buttonLText}>Back to Home Screen</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+class RegisterScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Register Screen</Text>
+        <TouchableOpacity 
+          onPress={() => this.props.navigation.navigate('Register')} style={styles.button_login}>
+          <Text style={styles.buttonLText}>Register</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={() => this.props.navigation.navigate('Home')} style={styles.button_login}>
+          <Text style={styles.buttonLText}>Back to Home Screen</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={['#D4EFF5', '#B4EDFF', '#026479']}
-        start ={[1,1]}
-        end = {[0.1, 0.1]}
-        style={{
-          flex: 1, 
-          flexDirection: 'column',
-           width: "100%",
-          justifyContent: 'center', 
-          alignItems: 'center',
-        }}>
-      <Image source={dumbell} style={styles.logo} /> 
-      <Text style={styles.instructions}>
-        JustLift
-      </Text>
-
-      <TouchableOpacity onPress={() => alert('click to login')} style={styles.button_login}>
-        <Text style={styles.buttonLText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => alert('click to sign in')} style={styles.button_register}>
-        <Text style={styles.buttonRText}>Sign Up</Text>
-      </TouchableOpacity>
-      </LinearGradient>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -71,3 +127,5 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
 });
+
+export default App;
