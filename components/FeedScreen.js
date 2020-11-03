@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Text, View} from 'react-native';
+import { Button, Text, View} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import StatisticsScreen from './StatisticsScreen';
+import SocialScreen from './SocialScreen';
+import UserScreen from './UserScreen';
 
 
 function Feed() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Feed!</Text>
+        <SocialScreen />
       </View>
     );
   }
@@ -16,7 +19,7 @@ function Feed() {
   function Account() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Account!</Text>
+        <UserScreen />
       </View>
     );
   }
@@ -32,7 +35,11 @@ function Feed() {
   function Record() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Record Workout!</Text>
+        <Text>Select a Workout</Text>
+        <View>
+          <Text>Saved Workouts</Text>
+        </View>
+        
       </View>
     );
   }
@@ -40,7 +47,7 @@ function Feed() {
   function Statistics() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Statistics!</Text>
+          <StatisticsScreen />
       </View>
     );
   }
