@@ -2,6 +2,7 @@ import { setAutoInitEnabledAsync } from 'expo-facebook';
 import React from 'react';
 import { View, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import Post from './Post';
+import Workouts from './Workouts'
 
 function UserScreen() {
     return (
@@ -27,44 +28,11 @@ function UserScreen() {
                 </View>
 
                 {/*Workouts*/}
-                <View style={styles.container}>
-                    <Text style={{fontSize: 30, minWidth: "100%", textAlign: "left"}}>Workouts</Text>
-                    {/*first workout*/}
-                    <View style={styles.horContainer}>
-                        <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                        <View style={styles.container}>
-                            <Text style={styles.leftText}>9</Text>
-                            <Text style={styles.leftText}>Exercises</Text>
-                        </View>
-                        <Image source={require("../assets/arrow.png")} style={styles.thumb}/>
-                    </View>
-                    {/*second workout*/}
-                    <View style={styles.horContainer}>
-                        <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                        <View style={styles.container}>
-                            <Text style={styles.leftText}>9</Text>
-                            <Text style={styles.leftText}>Exercises</Text>
-                        </View>
-                        <Image source={require("../assets/arrow.png")} style={styles.thumb}/>
-                    </View>
-                    {/*third workout*/}
-                    <View style={styles.horContainer}>
-                        <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                        <View style={styles.container}>
-                            <Text style={styles.leftText}>9</Text>
-                            <Text style={styles.leftText}>Exercises</Text>
-                        </View>
-                        <Image source={require("../assets/arrow.png")} style={styles.thumb}/>
-                    </View>
-                    {/*See More*/}
-                    <View style={styles.horContainer}>
-                        <Text style={{textAlign: "left",minWidth: "88%",alignSelf: "center", fontSize: 20}}>See More</Text>
-                        <Image source={require("../assets/arrow.png")} style={styles.thumb}/>
-                    </View>
-                </View>
+                <Workouts />
 
                 {/*Social Posts*/}
-                <Text style={{fontSize: 30, minWidth: "100%", textAlign: "left"}}>Activity</Text>
+                <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
+                <Post />
                 <Post />
             </View>
         </ScrollView>
@@ -87,7 +55,6 @@ const styles = StyleSheet.create({
         width: 50,
     },
     avi: {
-        
         top: "2%",
         height: 150,
         width: 150,

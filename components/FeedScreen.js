@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import StatisticsScreen from './StatisticsScreen';
 import SocialScreen from './SocialScreen';
 import UserScreen from './UserScreen';
+import RecordScreen from './RecordScreen';
+import EditScreen from './EditScreen';
 
 
 function Feed() {
@@ -27,7 +29,7 @@ function Feed() {
   function Edit() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Edit Workout!</Text>
+        <EditScreen />
       </View>
     );
   }
@@ -35,11 +37,7 @@ function Feed() {
   function Record() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Select a Workout</Text>
-        <View>
-          <Text>Saved Workouts</Text>
-        </View>
-        
+        <RecordScreen />
       </View>
     );
   }
