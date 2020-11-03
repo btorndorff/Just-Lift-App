@@ -1,8 +1,14 @@
-import { setAutoInitEnabledAsync } from 'expo-facebook';
+import { logOutAsync, setAutoInitEnabledAsync } from 'expo-facebook';
 import React from 'react';
-import { View, StyleSheet, Text, Image, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, Button} from 'react-native';
 import Post from './Post';
 import Workout3View from './Workout3View'
+import * as Facebook from 'expo-facebook';
+
+// function logOut(){
+//     Facebook.logOutAsync();
+//     navigate('Home');
+// }
 
 function UserScreen() {
     return (
@@ -10,7 +16,7 @@ function UserScreen() {
             <View style={styles.container}>
                 {/*AVI*/}
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>
-
+                
                 {/*Followers,Following,Workouts*/}
                 <View style={styles.follows}>
                     <View style={styles.container}>
@@ -26,7 +32,7 @@ function UserScreen() {
                         <Text style={styles.followText}>followers</Text>
                     </View>
                 </View>
-
+                {/* <Button title="logout" onPress={()=> logOut()}/> */}
                 {/*Workouts*/}
                 <Workout3View />
 
@@ -38,6 +44,7 @@ function UserScreen() {
         </ScrollView>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
