@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button} from 'react-native';
 
-function RecordWorkoutExercise() {
+function RecordWorkoutExercise({navigation}) {
     return (
         <View style={styles.container}>
             <Text>Workout Name Date</Text> 
@@ -13,7 +13,7 @@ function RecordWorkoutExercise() {
                 color="#841584"
             />
             <Button
-                onPress={() => console.log('switch to create workout screen')}
+                onPress={() => navigation.navigate('ChooseWorkoutScreen')}
                 title="End Workout"
                 color="#841584"
             />

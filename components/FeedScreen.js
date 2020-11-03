@@ -10,6 +10,8 @@ import ChooseWorkoutScreen from './ChooseWorkoutScreen';
 import EditScreen from './EditScreen';
 import ViewWorkoutScreen from './ViewWorkoutScreen';
 import CreateWorkoutScreen from './CreateWorkoutScreen';
+import { createStackNavigator } from '@react-navigation/stack';
+import RecordWorkoutExercise from './RecordWorkoutExercise';
 
 function Feed() {
     return (
@@ -29,19 +31,24 @@ function Feed() {
 
   function Edit() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {/*<EditScreen />*/}
-        {/*<ViewWorkoutScreen />*/}
-        <CreateWorkoutScreen />
-      </View>
+        <Stack.Navigator>
+          <Stack.Screen name="EditScreen" component={EditScreen} />
+          <Stack.Screen name="ViewWorkoutScreen" component={ViewWorkoutScreen} />
+          <Stack.Screen name="CreateWorkoutScreen" component={CreateWorkoutScreen} />
+          <Stack.Screen name="RecordWorkoutExercise" component={RecordWorkoutExercise} />
+        </Stack.Navigator>
     );
   }
   
   function Record() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ChooseWorkoutScreen />
-      </View>
+      <Stack.Navigator>
+          <Stack.Screen name="ChooseWorkoutScreen" component={ChooseWorkoutScreen} />
+          <Stack.Screen name="ViewWorkoutScreen" component={ViewWorkoutScreen} />
+          <Stack.Screen name="CreateWorkoutScreen" component={CreateWorkoutScreen} />
+          <Stack.Screen name="EditScreen" component={EditScreen} />
+          <Stack.Screen name="RecordWorkoutExercise" component={RecordWorkoutExercise} />
+        </Stack.Navigator>
     );
   }
 
@@ -54,7 +61,7 @@ function Feed() {
   }
 
   const Tab = createBottomTabNavigator();
-
+  const Stack = createStackNavigator();
 
 export default class FeedScreen extends React.Component {
     render(){

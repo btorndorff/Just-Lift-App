@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function ExercisePlaylistView() {
+function ExercisePlaylistView({navigation}) {
     return (
-        <View style={styles.horContainer}>
+        <View style={styles.horContainer} >
             <View style={styles.container}>
                 <Text style={{textAlign: "left", minWidth: "90%", fontSize:20}}>Barbell Bench Press</Text>
                 <Text style={{textAlign: "left", minWidth: "90%"}}>3 Sets | 8 Reps | 135 lb</Text>

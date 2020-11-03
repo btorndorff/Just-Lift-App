@@ -8,13 +8,13 @@ import RecordWorkoutExercise from './RecordWorkoutExercise';
 
 
 
-function ChooseWorkoutScreen() {
+function ChooseWorkoutScreen({navigation}) {
     return(
         <ScrollView style={{width:"100%"}}>
             <View style={styles.container}>
-                <Workout3View />
+                <Workout3View navigation={navigation}/>
                 <Button
-                    onPress={() => console.log('switch to create workout screen')}
+                    onPress={() => navigation.navigate('CreateWorkoutScreen')}
                     title="Create New Workout"
                     color="#841584"
                 />
