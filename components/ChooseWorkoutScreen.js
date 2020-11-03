@@ -3,28 +3,26 @@ import React from 'react';
 import {View, StyleSheet, Text, Image, ScrollView, Button} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Workouts from './Workouts'
+import Workout3View from './Workout3View'
 import RecordWorkoutExercise from './RecordWorkoutExercise';
 
 
-function RecordScreen() {
-    
 
+function ChooseWorkoutScreen() {
     return(
-    <ScrollView style={{width:"100%"}}>
-    <View style={styles.container}>
-        <Workouts />
-        <Button
-            onPress={() => console.log('switch to create workout screen')}
-            title="Create New Workout"
-            color="#841584"
-        />
-    </View>
-    </ScrollView>
-    );
+        <ScrollView style={{width:"100%"}}>
+            <View style={styles.container}>
+                <Workout3View />
+                <Button
+                    onPress={() => console.log('switch to create workout screen')}
+                    title="Create New Workout"
+                    color="#841584"
+                />
+            </View>
+        </ScrollView>
+    );   
+}  
 
-       
-}    
 
 const styles = StyleSheet.create({
     container: {
@@ -35,4 +33,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default RecordScreen;
+export default ChooseWorkoutScreen;

@@ -1,28 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import WorkoutPlaylistView from './WorkoutPlaylistView';
 
-function EditScreen() {
+function WorkoutPlaylistView() {
     return (
-        <ScrollView style={{maxWidth: "100%"}}>
-            <View style={styles.container}>
-            <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Workouts</Text>
-            {/*Create Workout*/}
+        <View style={styles.container}>
             <View style={styles.horContainer}>
-                <Image source={require("../assets/add.jpg")} style={styles.thumb}/>
+                <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
-                    <Text style={styles.leftText}>Create Workout</Text>
+                    <Text style={styles.leftText}>Pull Day</Text>
+                    <Text style={styles.leftText}> 9 Exercises</Text>
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
-            <WorkoutPlaylistView />
-            <WorkoutPlaylistView />
-            <WorkoutPlaylistView />
-            <WorkoutPlaylistView />
-            <WorkoutPlaylistView />
         </View>
-        </ScrollView>
     );
 }
 
@@ -54,4 +44,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default EditScreen;
+export default WorkoutPlaylistView;

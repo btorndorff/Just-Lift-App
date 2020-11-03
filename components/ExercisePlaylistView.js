@@ -1,17 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function WorkoutHorDisplay() {
+function ExercisePlaylistView() {
     return (
-        <View style={styles.container}>
-            <View style={styles.horContainer}>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                <View style={styles.container}>
-                    <Text style={styles.leftText}>Pull Day</Text>
-                    <Text style={styles.leftText}> 9 Exercises</Text>
-                </View>
-                <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
+        <View style={styles.horContainer}>
+            <View style={styles.container}>
+                <Text style={{textAlign: "left", minWidth: "90%", fontSize:20}}>Barbell Bench Press</Text>
+                <Text style={{textAlign: "left", minWidth: "90%"}}>3 Sets | 8 Reps | 135 lb</Text>
             </View>
+            <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
         </View>
     );
 }
@@ -44,4 +41,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default WorkoutHorDisplay;
+export default ExercisePlaylistView;

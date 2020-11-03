@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function Workouts() {
+function Workout3View() {
     return (
         <View style={styles.container}>
             <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Workouts</Text>
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Workouts;
+export default Workout3View;

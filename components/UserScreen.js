@@ -2,7 +2,7 @@ import { setAutoInitEnabledAsync } from 'expo-facebook';
 import React from 'react';
 import { View, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import Post from './Post';
-import Workouts from './Workouts'
+import Workout3View from './Workout3View'
 
 function UserScreen() {
     return (
@@ -28,7 +28,7 @@ function UserScreen() {
                 </View>
 
                 {/*Workouts*/}
-                <Workouts />
+                <Workout3View />
 
                 {/*Social Posts*/}
                 <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
