@@ -1,19 +1,68 @@
-import React , {usestate} from 'react';
-import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React , {useState} from 'react';
+import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity, } from 'react-native';
+import { ScrollView} from 'react-native-gesture-handler';
+import {Picker} from '@react-native-community/picker';
+import ExercisePlaylistView from './ExercisePlaylistView';
 
-const ChooseCategory = ({route}) => {
-    //const [exercise, setExercise] = useState('AboutReact');
-  
+const ChooseCategory = ({route, navigation}) => {
+    const [Category, setCategory] = useState({id: 10, name: "Abs"});
+    const [Exercises, setExercises] = useState([]);
+
+    function getExercises(id) {
+      var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Basic Ym9yZmY6ODgyMjI3NTEzYzk1ZDJhZTQyZTYwZDJlODEyMjM2MmM0YTUzYTcxMQ==");
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+        };
+      return fetch("https://wger.de/api/v2/exercise/?language=2&category=" + id + "&status=2", requestOptions)
+        .then(r => r.json().then(data => ({
+          status:r.status,
+          body:data
+        })))
+        .then((obj) => {
+          let arr = obj.body.results;
+          return arr;
+        })
+    }
+
+    function addExercise(exc) {
+      //Update workout in database with the exercise added
+
+      //navigate back to workout
+      navigation.navigate('CreateWorkoutScreen')
+    }
+
+    const items = route.params.categories.map(x => <Picker.Item label={x.name} value={x.id} key={x.id} />)
+
     return (
         <ScrollView style={{width: "100%"}}>
             <View style={styles.container}>
-            <TouchableOpacity
-                //val is array of id and name for exercise categories
-                onPress={() =>  console.log(route.params.categories) }
-                style={styles.button_login}>
-                <Text style={styles.buttonLText}>Select Category</Text>  
-            </TouchableOpacity>
+              <Text style={{fontSize: 30}}>Select A Muscle</Text>
+              <Picker
+                selectedValue={Category}
+                style={{height: 50, width: 100, marginBottom: 150}}
+                onValueChange={(itemValue, itemIndex) => {
+                  setCategory(itemValue);
+                  getExercises(itemValue)
+                    .then(exc => {
+                      setExercises(exc)
+                    });
+                }
+              }>
+                <Picker.Item label="" value={10} key={-1} />
+                {items}
+              </Picker>
+              <View style={styles.container}>
+                {Exercises.map(x => 
+                  <TouchableOpacity
+                    onPress={() =>  addExercise(x)} //On Press Add to database and return to workout screen
+                    key={x.id}
+                    style={styles.container}>
+                      <ExercisePlaylistView name={x.name}/>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
         </ScrollView>
     );

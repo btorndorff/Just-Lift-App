@@ -39,6 +39,7 @@ function Feed() {
           <Stack.Screen name="ViewWorkoutScreen" component={ViewWorkoutScreen} />
           <Stack.Screen name="CreateWorkoutScreen" component={CreateWorkoutScreen} />
           <Stack.Screen name="RecordWorkoutExercise" component={RecordWorkoutExercise} />
+          <Stack.Screen name="ChooseCategory" component={ChooseCategory} />
         </Stack.Navigator>
     );
   }

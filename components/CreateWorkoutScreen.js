@@ -52,9 +52,7 @@ function CreateWorkoutScreen({navigation}) {
                     <TouchableOpacity
                         //val is array of id and name for exercise categories
                         onPress={() => getExercise().then((val) => {
-                            navigation.navigate('ChooseCategory', {
-                            categories: val,
-                          }) 
+                            navigation.navigate('ChooseCategory', {categories: val}) 
                         })}
                             
                             // getExercise().then((val)=>{
