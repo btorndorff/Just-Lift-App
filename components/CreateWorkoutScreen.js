@@ -4,6 +4,21 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
 
 function CreateWorkoutScreen({navigation}) {
+    function getExercise(name) {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Basic Ym9yZmY6ODgyMjI3NTEzYzk1ZDJhZTQyZTYwZDJlODEyMjM2MmM0YTUzYTcxMQ==");
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+        };
+        fetch("https://wger.de/api/v2/exercise/", requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+    
+    let exercise = "";
+
     return (
         // <ScrollView style={{width: "100%"}}>
         //     <View style={styles.container}>
@@ -26,16 +41,16 @@ function CreateWorkoutScreen({navigation}) {
                 <Image 
                     source={require('../assets/add.jpg')} style={{height: 150, width: 150, marginTop: 50}}
                 />
-                {/* <TextInput style = {styles.input}
+                <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
                     placeholder = "Title of Workout"
                     placeholderTextColor = "#9a73ef"
                     autoCapitalize = "none"
-                    onChangeText = {this.handleTitle}/> */}
+                /> 
                 <ExercisePlaylistView />
                 <View style={styles.hContainer}>
                     <TouchableOpacity
-                        onPress={() => alert("get exercise api working here")} style={styles.button_login}>
+                        onPress={() => getExercise("Arnold Press")} style={styles.button_login}>
                         <Text style={styles.buttonLText}>Add Excercise</Text>  
                     </TouchableOpacity> 
                 </View>
@@ -45,9 +60,6 @@ function CreateWorkoutScreen({navigation}) {
                     color="#841584"
                 />
             </View>
-            
-            
-            
         </ScrollView>
     );
 }

@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image} from 'react-native';
+import { View, StyleSheet, Text, Image,TextInput} from 'react-native';
 
 function ExercisePlaylistView({navigation}) {
     return (
         <View style={styles.horContainer} >
             <View style={styles.container}>
-                <Text style={{textAlign: "left", minWidth: "90%", fontSize:20}}>Barbell Bench Press</Text>
+                <TextInput style = {{textAlign: "left", minWidth: "90%", fontSize:20}}
+                    underlineColorAndroid = "transparent"
+                    placeholder = "Exercise"
+                    placeholderTextColor = "#9a73ef"
+                    autoCapitalize = "none"
+                />
                 <Text style={{textAlign: "left", minWidth: "90%"}}>3 Sets | 8 Reps | 135 lb</Text>
             </View>
             <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         alignSelf: "center"
-    }
+    },
 })
 
 export default ExercisePlaylistView;
