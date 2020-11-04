@@ -5,21 +5,6 @@ import Workout3View from './Workout3View'
 import Icon from 'react-native-vector-icons/Feather';
 import * as firebase from 'firebase'
 
-// var firebaseConfig = {
-//     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
-//     authDomain: "justliftapp-52af0.firebaseapp.com",
-//     databaseURL: "https://justliftapp-52af0.firebaseio.com",
-//     projectId: "justliftapp-52af0",
-//     storageBucket: "justliftapp-52af0.appspot.com",
-//     messagingSenderId: "459347127352",
-//     appId: "1:459347127352:web:c4dc3739b2d35ce1dccacd",
-//     measurementId: "G-KRT9MBHW9T"
-//   };
-
-// if (!firebase.apps.length) {
-//     firebase.initializeApp(firebaseConfig);
-// }
-
 function ChooseWorkoutScreen({navigation}) {
     return(
         <ScrollView style={{width:"100%"}}>
@@ -35,6 +20,64 @@ function ChooseWorkoutScreen({navigation}) {
     );   
 }  
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "flex-start",
+    },
+    bottom: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 36
+      },
+    buttonLText: {
+        fontSize: 20,
+        color: '#FFFFFF',
+      },
+    hcontainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: '#ecf0f1',
+        padding: 8,
+        flexDirection:'row',
+        alignItems:'center'
+    
+    
+      },
+      button_login: {
+        backgroundColor: "black",
+        padding: 20,
+        borderRadius: 5,
+      },
+    horContainer: {
+        flex: 1,
+        minWidth: "100%",
+        flexDirection: "row",
+        alignItems: "flex-start",
+    },
+    arrow: {
+        height: 50,
+        width: 50,
+        //alignSelf: "bottom"
+    },
+    input: {
+        margin: 15,
+        height: 40,
+        borderColor: '#7a42f4',
+        borderWidth: 1
+     },
+      textInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'baseline',
+        borderColor: 'black',
+        borderBottomWidth: 1,
+        paddingRight: 10,
+        paddingBottom: 10,
+      },
+})
+
+export default ChooseWorkoutScreen;
 //     constructor() {
 //         super();
 //         this.state = { create : false, title : ""};
@@ -108,59 +151,3 @@ function ChooseWorkoutScreen({navigation}) {
 //     }
 // }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "flex-start",
-    },
-    bottom: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        marginBottom: 36
-      },
-    buttonLText: {
-        fontSize: 20,
-        color: '#FFFFFF',
-      },
-    hcontainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-        backgroundColor: '#ecf0f1',
-        padding: 8,
-        flexDirection:'row',
-        alignItems:'center'
-    
-    
-      },
-      button_login: {
-        backgroundColor: "black",
-        padding: 20,
-        borderRadius: 5,
-      },
-    horContainer: {
-        flex: 1,
-        minWidth: "100%",
-        flexDirection: "row",
-        alignItems: "flex-start",
-    },
-    arrow: {
-        height: 50,
-        width: 50,
-        //alignSelf: "bottom"
-    },
-    input: {
-        margin: 15,
-        height: 40,
-        borderColor: '#7a42f4',
-        borderWidth: 1
-     },
-      textInputContainer: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-        borderColor: 'black',
-        borderBottomWidth: 1,
-        paddingRight: 10,
-        paddingBottom: 10,
-      },
-})
