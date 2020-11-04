@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function Workout3View() {
+function Workout3View({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Workouts</Text>
             {/*first workout*/}
-            <View style={styles.horContainer}>
+            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
                     <Text style={styles.leftText}>Pull Day</Text>
@@ -15,7 +15,7 @@ function Workout3View() {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
             {/*second workout*/}
-            <View style={styles.horContainer}>
+            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
                     <Text style={styles.leftText}>Pull Day</Text>
@@ -24,7 +24,7 @@ function Workout3View() {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
             {/*third workout*/}
-            <View style={styles.horContainer}>
+            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
                     <Text style={styles.leftText}>Pull Day</Text>
@@ -33,7 +33,7 @@ function Workout3View() {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
             {/*See More*/}
-            <View style={styles.horContainer}>
+            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('EditScreen')}>
                 <Text style={{textAlign: "left",minWidth: "88%",alignSelf: "center", fontSize: 20}}>See More</Text>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>

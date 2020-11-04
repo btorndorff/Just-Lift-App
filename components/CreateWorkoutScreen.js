@@ -12,7 +12,9 @@ function CreateWorkoutScreen() {
                 <Text style={{marginBottom: 20}}>6 Excercises</Text>
                 <ExercisePlaylistView />
                 <View style={styles.horContainer}>
-                    <Text style={{textAlign: "left", minWidth: "90%", fontSize:20}}>Add Excercise</Text>
+                    <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+                        <Text style={{textAlign: "left", minWidth: "90%", fontSize:20}}>Add Excercise</Text>
+                    </View>
                     <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
                 </View>
             </View>
