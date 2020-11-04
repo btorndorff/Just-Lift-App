@@ -23,9 +23,11 @@ function Feed() {
   
   function Account() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <UserScreen />
-      </View>
+      <Stack.Navigator>
+        <Stack.Screen name="UserScreen" component={UserScreen} />
+        <Stack.Screen name="ViewWorkoutScreen" component={ViewWorkoutScreen} />
+        <Stack.Screen name="EditScreen" component={EditScreen} />
+      </Stack.Navigator>
     );
   }
 

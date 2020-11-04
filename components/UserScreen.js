@@ -10,7 +10,7 @@ import * as Facebook from 'expo-facebook';
 //     navigate('Home');
 // }
 
-function UserScreen() {
+function UserScreen({navigation}) {
     return (
         <ScrollView style={{width:"100%"}}>
             <View style={styles.container}>
@@ -19,7 +19,7 @@ function UserScreen() {
                 
                 {/*Followers,Following,Workouts*/}
                 <View style={styles.follows}>
-                    <View style={styles.container}>
+                    <View style={styles.container} onStartShouldSetResponder={() => navigation.navigate('ViewWorkoutScreen')}>
                         <Text style={styles.followText}>4</Text>
                         <Text style={styles.followText}>workouts</Text>
                     </View>
@@ -34,7 +34,7 @@ function UserScreen() {
                 </View>
                 {/* <Button title="logout" onPress={()=> logOut()}/> */}
                 {/*Workouts*/}
-                <Workout3View />
+                <Workout3View navigation={navigation}/>
 
                 {/*Social Posts*/}
                 <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
