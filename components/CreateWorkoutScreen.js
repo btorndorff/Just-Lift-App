@@ -51,16 +51,18 @@ function CreateWorkoutScreen({navigation}) {
                 <View style={styles.hContainer}>
                     <TouchableOpacity
                         //val is array of id and name for exercise categories
-                        onPress={() => navigation.navigate('ChooseCategory', {
-                            categories: getExercise(),
+                        onPress={() => getExercise().then((val) => {
+                            navigation.navigate('ChooseCategory', {
+                            categories: val,
                           }) 
+                        })}
                             
                             // getExercise().then((val)=>{
                             // for(let i = 0; i <val.length; i++ ){
                             //     console.log(val[i].name, val[i].id);
                             // }
                             // })} 
-                        }
+                        
                         style={styles.button_login}>
                         <Text style={styles.buttonLText}>Add Excercise</Text>  
                     </TouchableOpacity> 
