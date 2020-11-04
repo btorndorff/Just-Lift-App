@@ -12,6 +12,7 @@ import ViewWorkoutScreen from './ViewWorkoutScreen';
 import CreateWorkoutScreen from './CreateWorkoutScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import RecordWorkoutExercise from './RecordWorkoutExercise';
+import ChooseCategory from './ChooseCategory';
 
 function Feed() {
     return (
@@ -50,6 +51,7 @@ function Feed() {
           <Stack.Screen name="CreateWorkoutScreen" component={CreateWorkoutScreen} />
           <Stack.Screen name="EditScreen" component={EditScreen} />
           <Stack.Screen name="RecordWorkoutExercise" component={RecordWorkoutExercise} />
+          <Stack.Screen name="ChooseCategory" component={ChooseCategory} />
         </Stack.Navigator>
     );
   }

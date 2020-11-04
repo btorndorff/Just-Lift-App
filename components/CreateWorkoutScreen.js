@@ -3,37 +3,37 @@ import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity} fro
 import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
 
+
 function CreateWorkoutScreen({navigation}) {
-    function getExercise(name) {
+    function getExercise() {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Basic Ym9yZmY6ODgyMjI3NTEzYzk1ZDJhZTQyZTYwZDJlODEyMjM2MmM0YTUzYTcxMQ==");
         var requestOptions = {
             method: 'GET',
             headers: myHeaders,
         };
-        fetch("https://wger.de/api/v2/exercise/", requestOptions)
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        //fetch("https://wger.de/api/v2/exercise/?language=2&exercisecategory=8&status=2", requestOptions)
+        // fetch("https://wger.de/api/v2/exercisecategory/", requestOptions)
+        //     .then(response => response.json())
+        //     .then(result => (result.results))
+        //     .catch(error => console.log('error', error));
+
+        return fetch("https:wger.de/api/v2/exercisecategory/", requestOptions)
+            .then(r => r.json().then(data => ({
+                status:r.status,
+                body:data
+            })))
+            .then((obj) => {
+            let arr = obj.body.results;
+            return arr; //array of exercise categories (arms, abs, chest, ...)
+          })
+    
     }
+    
     
     let exercise = "";
 
     return (
-        // <ScrollView style={{width: "100%"}}>
-        //     <View style={styles.container}>
-        //         <Image source={require('../assets/add.jpg')} style={{height: 200, width: 200, marginTop: 50}}/>
-        //         <Text style={{fontSize: 30}}>Push Day</Text>
-        //         <Text style={{marginBottom: 20}}>6 Excercises</Text>
-        //         <ExercisePlaylistView />
-        //         <View style={styles.horContainer}>
-        //             <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-        //                 <Text style={{textAlign: "left", minWidth: "90%", fontSize:20}}>Add Excercise</Text>
-        //             </View>
-        //             <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
-        //         </View>
-        //     </View>
-        // </ScrollView>
         <ScrollView style={{width: "100%"}}>
             <View style={styles.container}>
 
@@ -50,7 +50,18 @@ function CreateWorkoutScreen({navigation}) {
                 <ExercisePlaylistView />
                 <View style={styles.hContainer}>
                     <TouchableOpacity
-                        onPress={() => getExercise("Arnold Press")} style={styles.button_login}>
+                        //val is array of id and name for exercise categories
+                        onPress={() => navigation.navigate('ChooseCategory', {
+                            categories: getExercise(),
+                          }) 
+                            
+                            // getExercise().then((val)=>{
+                            // for(let i = 0; i <val.length; i++ ){
+                            //     console.log(val[i].name, val[i].id);
+                            // }
+                            // })} 
+                        }
+                        style={styles.button_login}>
                         <Text style={styles.buttonLText}>Add Excercise</Text>  
                     </TouchableOpacity> 
                 </View>
