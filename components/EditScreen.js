@@ -23,18 +23,26 @@ if (!firebase.apps.length) {
 
 function EditScreen({navigation}) {
     const [Workouts, setWorkouts] = useState([]);
+    const userid = firebase.auth().currentUser.uid;
 
     function getWorkouts(){
         var wks;
         var ids = [];
-        return firebase.database().ref('User1/WORKOUTS').once('value').then( function(snapshot){
-            wks = snapshot.val();
-            let x = Object.keys(wks)
-            for(const i in wks){
-                ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
-            }
-            return ids;
-        })
+        if (userid != null){
+            return firebase.database().ref('users/' + userid + '/workouts').once('value').then( function(snapshot){
+                wks = snapshot.val();
+                let x = Object.keys(wks)
+                if(x.length > 1) {
+                    for(const i in wks){
+                        ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
+                    }
+                    ids.splice(ids.indexOf({name: "temp", numExcs: 1}),1)
+                }
+            
+                return ids;
+            })
+        }
+        return ids;
     }
 
     getWorkouts()

@@ -49,6 +49,25 @@ export default class HomeScreen extends React.Component {
       }
 
       firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          console.log(user.user.uid)
+          firebaseApp.database().ref('users/' + user.user.uid).set({
+            email: user.user.email,
+            workouts: {
+              temp: {
+                name: "temp",
+                exercises: {
+                  0: {
+                    name: "temp",
+                    sets: 0,
+                    reps: 0,
+                    weight: 0
+                  }
+                }
+              }
+            }
+          })
+        })
     }
     catch (error) {
       console.log(error.toString())
