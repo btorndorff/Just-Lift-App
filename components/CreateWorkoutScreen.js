@@ -65,7 +65,6 @@ function CreateWorkoutScreen({navigation}) {
             //get ids for exercises
             for(const i in excs){
                 ids.push({name : excs[i].name, sets : excs[i].sets, reps : excs[i].reps, weight : excs[i].weight});
-                //console.log(i);
             }
             return ids;
             //console.log(ids)
@@ -74,14 +73,6 @@ function CreateWorkoutScreen({navigation}) {
         })
         //return "bad";
     }
-
-    // var ref = firebase.database().ref();
-
-    // ref.on("value", function(snapshot) {
-    //     console.log(snapshot.val());
-    // }, function (error) {
-    //     console.log("Error: " + error.code);
-    // });
 
     return (
         <ScrollView style={{width: "100%"}}>
