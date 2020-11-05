@@ -1,8 +1,9 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
 import * as firebase from 'firebase'
+import { useIsFocused } from '@react-navigation/native';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -20,22 +21,7 @@ if (!firebase.apps.length) {
 }
 
 function CreateWorkoutScreen({navigation}) {
-    //get the workout assume workout is json:
-    /*
-    workout
-    {
-        title: "",
-        exercises: [exercise1, exercise2, exercise3] 
-    }
-
-    exercise
-    {
-        name: "",
-        reps: 0,
-        sets: 0,
-        weight: 0,
-    }
-    */
+    const [Workout, setWorkout] = useState([])
 
     function getExercise() {
         var myHeaders = new Headers();
@@ -74,33 +60,40 @@ function CreateWorkoutScreen({navigation}) {
         //return "bad";
     }
 
+    if(useIsFocused()) {
+        getcurrentExercises()
+            .then(workout=> {
+            setWorkout(workout)
+        })
+    }
+    
+    getcurrentExercises();
     return (
         <ScrollView style={{width: "100%"}}>
-            <View style={styles.container}>
+            <View style={styles.container} isfoc>
 
-                    {/* add support for user to add custom image */}
+                {/* add support for user to add custom image */}
                 <Image 
                     source={require('../assets/add.jpg')} style={{height: 150, width: 150, marginTop: 50}}
+                    on={() => {
+                        getcurrentExercises()
+                        .then(workout=> {
+                            setWorkout(workout)
+                        })
+                    }}
                 />
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
                     placeholder = "Title of Workout"
                     placeholderTextColor = "#9a73ef"
                     autoCapitalize = "none"
+                    onChangeText = {value => {
+                        console.log(value);
+                    }}
                 /> 
-                <ExercisePlaylistView />
-
-                {/* <View style={styles.container}>
-                {getcurrentExercises().then((val) => {
-                    val.map(x => 
-                    <TouchableOpacity
-                        key={x.id}
-                        style={styles.container}>
-                        <ExercisePlaylistView name={x.name}/>
-                    </TouchableOpacity>
-                    )}
-                )}
-              </View>  */}
+                <View style={styles.container}>
+                    {Workout.map(x => <ExercisePlaylistView name={x.name} sets={x.sets} reps={x.reps} weight={x.weight} />)}
+                </View>
 
                 <View style={styles.hContainer}>
                     <TouchableOpacity
