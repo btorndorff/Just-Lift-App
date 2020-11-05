@@ -5,6 +5,23 @@ import ExercisePlaylistView from './ExercisePlaylistView'
 
 
 function CreateWorkoutScreen({navigation}) {
+    //get the workout assume workout is json:
+    /*
+    workout
+    {
+        title: "",
+        exercises: [exercise1, exercise2, exercise3] 
+    }
+
+    exercise
+    {
+        name: "",
+        reps: 0,
+        sets: 0,
+        weight: 0,
+    }
+    */
+
     function getExercise() {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Basic Ym9yZmY6ODgyMjI3NTEzYzk1ZDJhZTQyZTYwZDJlODEyMjM2MmM0YTUzYTcxMQ==");
@@ -12,12 +29,6 @@ function CreateWorkoutScreen({navigation}) {
             method: 'GET',
             headers: myHeaders,
         };
-        //fetch("https://wger.de/api/v2/exercise/?language=2&exercisecategory=8&status=2", requestOptions)
-        // fetch("https://wger.de/api/v2/exercisecategory/", requestOptions)
-        //     .then(response => response.json())
-        //     .then(result => (result.results))
-        //     .catch(error => console.log('error', error));
-
         return fetch("https:wger.de/api/v2/exercisecategory/", requestOptions)
             .then(r => r.json().then(data => ({
                 status:r.status,
@@ -29,9 +40,6 @@ function CreateWorkoutScreen({navigation}) {
           })
     
     }
-    
-    
-    let exercise = "";
 
     return (
         <ScrollView style={{width: "100%"}}>
@@ -54,13 +62,6 @@ function CreateWorkoutScreen({navigation}) {
                         onPress={() => getExercise().then((val) => {
                             navigation.navigate('ChooseCategory', {categories: val}) 
                         })}
-                            
-                            // getExercise().then((val)=>{
-                            // for(let i = 0; i <val.length; i++ ){
-                            //     console.log(val[i].name, val[i].id);
-                            // }
-                            // })} 
-                        
                         style={styles.button_login}>
                         <Text style={styles.buttonLText}>Add Excercise</Text>  
                     </TouchableOpacity> 

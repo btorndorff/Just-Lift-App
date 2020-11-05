@@ -26,13 +26,6 @@ const ChooseCategory = ({route, navigation}) => {
         })
     }
 
-    function addExercise(exc) {
-      //Update workout in database with the exercise added
-
-      //navigate back to workout
-      navigation.navigate('CreateWorkoutScreen')
-    }
-
     const items = route.params.categories.map(x => <Picker.Item label={x.name} value={x.id} key={x.id} />)
 
     return (
@@ -56,10 +49,10 @@ const ChooseCategory = ({route, navigation}) => {
               <View style={styles.container}>
                 {Exercises.map(x => 
                   <TouchableOpacity
-                    onPress={() =>  addExercise(x)} //On Press Add to database and return to workout screen
+                    onPress={() =>  navigation.navigate('ExerciseNums', {exercise: x})} 
                     key={x.id}
                     style={styles.container}>
-                      <ExercisePlaylistView name={x.name}/>
+                      <ExercisePlaylistView name={x.name} reps={0} sets={0} weight={0}/>
                   </TouchableOpacity>
                 )}
               </View>

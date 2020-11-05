@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image,TextInput} from 'react-native';
 
-function ExercisePlaylistView({navigation, name}) {
+function ExercisePlaylistView({navigation, name, reps, sets, weight}) {
     return (
         <View style={styles.horContainer} >
             <View style={styles.container}>
                 <Text style={{textAlign: "left", minWidth: "90%"}}>{name}</Text>
-                <Text style={{textAlign: "left", minWidth: "90%"}}>3 Sets | 8 Reps | 135 lb</Text>
+                <Text style={{textAlign: "left", minWidth: "90%"}}>{sets} Sets | {reps} Reps | {weight} lb</Text>
             </View>
             <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
         </View>
