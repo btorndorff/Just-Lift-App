@@ -43,27 +43,7 @@ const ChooseCategory = ({route, navigation}) => {
         })
     }
 
-    function addExercise(exc) { //json object with id, name, etc..., for selected exercise
-        //Update workout in database with the exercise added
-
-        var postData = {
-            name: exc.name,
-            sets: 3,
-            reps: 8,
-            weight: 135,
-        };
-
-        //var newPostKey = firebase.database().ref().child('workout1').push().key;
-
-        var updates = {};
-        //updates['workout1/' + newPostKey] = postData;
-        updates['workout1/' + exc.id] = postData;
-
-        firebase.database().ref().update(updates);
-
-        //navigate back to workout
-        navigation.navigate('CreateWorkoutScreen')
-    }
+    
 
     const items = route.params.categories.map(x => <Picker.Item label={x.name} value={x.id} key={x.id} />)
 
