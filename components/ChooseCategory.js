@@ -89,12 +89,10 @@ const ChooseCategory = ({route, navigation}) => {
               <View style={styles.container}>
                 {Exercises.map(x => 
                   <TouchableOpacity
-                    onPress={() =>  {
-                        //console.log(x) 
-                        addExercise(x)}} //On Press Add to database and return to workout screen
+                    onPress={() =>  navigation.navigate('ExerciseNums', {exercise: x})} 
                     key={x.id}
                     style={styles.container}>
-                      <ExercisePlaylistView name={x.name}/>
+                      <ExercisePlaylistView name={x.name} reps={0} sets={0} weight={0}/>
                   </TouchableOpacity>
                 )}
               </View>
