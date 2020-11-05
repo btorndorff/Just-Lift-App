@@ -22,6 +22,7 @@ if (!firebase.apps.length) {
 
 function CreateWorkoutScreen({navigation}) {
     const [Workout, setWorkout] = useState([])
+    //create this workout in the database
 
     function getExercise() {
         var myHeaders = new Headers();
@@ -67,7 +68,6 @@ function CreateWorkoutScreen({navigation}) {
         })
     }
     
-    getcurrentExercises();
     return (
         <ScrollView style={{width: "100%"}}>
             <View style={styles.container} isfoc>
@@ -75,7 +75,7 @@ function CreateWorkoutScreen({navigation}) {
                 {/* add support for user to add custom image */}
                 <Image 
                     source={require('../assets/add.jpg')} style={{height: 150, width: 150, marginTop: 50}}
-                    on={() => {
+                    onLoad={() => {
                         getcurrentExercises()
                         .then(workout=> {
                             setWorkout(workout)
@@ -88,11 +88,12 @@ function CreateWorkoutScreen({navigation}) {
                     placeholderTextColor = "#9a73ef"
                     autoCapitalize = "none"
                     onChangeText = {value => {
+                        //update name of workout in database
                         console.log(value);
                     }}
                 /> 
                 <View style={styles.container}>
-                    {Workout.map(x => <ExercisePlaylistView name={x.name} sets={x.sets} reps={x.reps} weight={x.weight} />)}
+                    {Workout.map(x => <ExercisePlaylistView name={x.name} sets={x.sets} reps={x.reps} weight={x.weight} key={x.name}/>)}
                 </View>
 
                 <View style={styles.hContainer}>

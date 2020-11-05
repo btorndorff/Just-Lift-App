@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function WorkoutPlaylistView({navigation}) {
+function WorkoutPlaylistView({navigation, name, numExcs}) {
     return (
         <View style={styles.container} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
             <View style={styles.horContainer}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb} />
                 <View style={styles.container}>
-                    <Text style={styles.leftText}>Pull Day</Text>
-                    <Text style={styles.leftText}>9 Exercises</Text>
+                    <Text style={styles.leftText}>{name}</Text>
+                    <Text style={styles.leftText}>{numExcs} Exercises</Text>
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>

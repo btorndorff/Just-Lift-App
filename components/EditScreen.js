@@ -1,11 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import WorkoutPlaylistView from './WorkoutPlaylistView';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as firebase from 'firebase'
+
+var firebaseConfig = {
+    apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
+    authDomain: "justliftapp-52af0.firebaseapp.com",
+    databaseURL: "https://justliftapp-52af0.firebaseio.com",
+    projectId: "justliftapp-52af0",
+    storageBucket: "justliftapp-52af0.appspot.com",
+    messagingSenderId: "459347127352",
+    appId: "1:459347127352:web:c4dc3739b2d35ce1dccacd",
+    measurementId: "G-KRT9MBHW9T"
+  };
+  // Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 function EditScreen({navigation}) {
+    const [Workouts, setWorkouts] = useState([]);
+
+    function getWorkouts(){
+        var wks;
+        var ids = [];
+        return firebase.database().ref('User1/WORKOUTS').once('value').then( function(snapshot){
+            wks = snapshot.val();
+            let x = Object.keys(wks)
+            for(const i in wks){
+                ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
+            }
+            return ids;
+        })
+    }
+
+    getWorkouts()
+        .then(wks => setWorkouts(wks))
+
     return (
         <ScrollView style={{maxWidth: "100%"}}>
             <View style={styles.container}>
@@ -18,11 +52,10 @@ function EditScreen({navigation}) {
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
-            <WorkoutPlaylistView navigation={navigation}/>
-            <WorkoutPlaylistView navigation={navigation}/>
-            <WorkoutPlaylistView navigation={navigation}/>
-            <WorkoutPlaylistView navigation={navigation}/>
-            <WorkoutPlaylistView navigation={navigation}/>
+            <View style={styles.container}>
+                
+                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs}/>)}
+            </View>
         </View>
         </ScrollView>
     );
