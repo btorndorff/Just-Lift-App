@@ -14,6 +14,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RecordWorkoutExercise from './RecordWorkoutExercise';
 import ChooseCategory from './ChooseCategory';
 import ExerciseNums from './ExerciseNums';
+import WorkoutCompleted from './WorkoutCompleted';
+import HomeScreen from './HomeScreen';
 
 function Feed() {
     return (
@@ -29,6 +31,7 @@ function Feed() {
         <Stack.Screen name="UserScreen" component={UserScreen} />
         <Stack.Screen name="ViewWorkoutScreen" component={ViewWorkoutScreen} />
         <Stack.Screen name="EditScreen" component={EditScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     );
   }
@@ -42,6 +45,7 @@ function Feed() {
           <Stack.Screen name="RecordWorkoutExercise" component={RecordWorkoutExercise} />
           <Stack.Screen name="ChooseCategory" component={ChooseCategory} />
           <Stack.Screen name="ExerciseNums" component={ExerciseNums} />
+          <Stack.Screen name="WorkoutCompleted" component={WorkoutCompleted} />
         </Stack.Navigator>
     );
   }
@@ -56,6 +60,7 @@ function Feed() {
           <Stack.Screen name="RecordWorkoutExercise" component={RecordWorkoutExercise} />
           <Stack.Screen name="ChooseCategory" component={ChooseCategory} />
           <Stack.Screen name="ExerciseNums" component={ExerciseNums} />
+          <Stack.Screen name="WorkoutCompleted" component={WorkoutCompleted} />
         </Stack.Navigator>
     );
   }

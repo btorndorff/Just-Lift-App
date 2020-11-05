@@ -21,14 +21,14 @@ function RecordWorkoutExercise({route, navigation}) {
                         setIndex(i);
                         setExercise(exercises[i]);
                     } else {
-                        navigation.navigate('ChooseWorkoutScreen')
+                        navigation.navigate('WorkoutCompleted',{name: name + " " + date})
                     }
                 }}
                 style={styles.Button1}> 
                     <Text style={styles.ButtonText}>Next Exercise</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => navigation.navigate('ChooseWorkoutScreen')}
+                onPress={() => navigation.navigate('WorkoutCompleted',{name: name + " " + date})}
                 style={styles.Button2}> 
                     <Text style={styles.ButtonText}>End Workout</Text>
             </TouchableOpacity>

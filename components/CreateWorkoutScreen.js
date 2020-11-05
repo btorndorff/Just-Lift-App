@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react';
-import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity, Alert} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
 import * as firebase from 'firebase'
@@ -21,8 +21,19 @@ if (!firebase.apps.length) {
 }
 
 function CreateWorkoutScreen({navigation}) {
-    const [Workout, setWorkout] = useState([])
+    const [Workout, setWorkout] = useState({
+        name: "temp",
+        exercises: {
+          0: {
+            name: "temp",
+            sets: 0,
+            reps: 0,
+            weight: 0
+          }
+        }
+      })
     //create this workout in the database
+    const userid = firebase.auth().currentUser.uid;
 
     function getExercise() {
         var myHeaders = new Headers();
@@ -46,19 +57,32 @@ function CreateWorkoutScreen({navigation}) {
     function getcurrentExercises(){
         var excs;
         var ids = [];//ids of exercises in workout so far
-        return firebase.database().ref('workout1/').once('value').then( function(snapshot){
-            excs = snapshot.val();
+        if (userid != null) {
+            return firebase.database().ref('users/' + userid + '/workouts/' + Workout.name + '/exercises').once('value').then( function(snapshot){
+                excs = snapshot.val();
 
-            //get ids for exercises
-            for(const i in excs){
-                ids.push({name : excs[i].name, sets : excs[i].sets, reps : excs[i].reps, weight : excs[i].weight});
-            }
-            return ids;
-            //console.log(ids)
-            // const listItems = ids.map((d) => <li key={d.name}>{d.name}{d.sets}{d.reps}{d.weight}</li>);
-            // return listItems;
-        })
+                //get ids for exercises
+                for(const i in excs){
+                    ids.push({name : excs[i].name, sets : excs[i].sets, reps : excs[i].reps, weight : excs[i].weight});
+                }
+                return ids;
+                //console.log(ids)
+                // const listItems = ids.map((d) => <li key={d.name}>{d.name}{d.sets}{d.reps}{d.weight}</li>);
+                // return listItems;
+            })
+        }
         //return "bad";
+    }
+
+    function updateWorkout(){
+        var excs;
+        var ids = [];
+        if (userid != null){
+            firebase.database().ref('users/' + userid + '/workouts/' + Workout.name).set({
+                name: Workout.name,
+                exercises: Workout.exercises
+            }) 
+        }
     }
 
     if(useIsFocused()) {
@@ -78,7 +102,7 @@ function CreateWorkoutScreen({navigation}) {
                     onLoad={() => {
                         getcurrentExercises()
                         .then(workout=> {
-                            setWorkout(workout)
+                            setWorkout(workout);
                         })
                     }}
                 />
@@ -93,14 +117,19 @@ function CreateWorkoutScreen({navigation}) {
                     }}
                 /> 
                 <View style={styles.container}>
-                    {Workout.map(x => <ExercisePlaylistView name={x.name} sets={x.sets} reps={x.reps} weight={x.weight} key={x.name}/>)}
+                    
                 </View>
 
                 <View style={styles.hContainer}>
                     <TouchableOpacity
                         //val is array of id and name for exercise categories
                         onPress={() => getExercise().then((val) => {
-                            navigation.navigate('ChooseCategory', {categories: val}) 
+                            if (Workout.name != "temp") {
+                                updateWorkout();
+                                navigation.navigate('ChooseCategory', {categories: val}) 
+                            } else {
+                                Alert.alert("Please Enter the Workout Name First");
+                            }
                         })}
                         style={styles.button_login}>
                         <Text style={styles.buttonLText}>Add Excercise</Text>  
