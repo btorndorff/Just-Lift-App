@@ -2,7 +2,22 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
+import * as firebase from 'firebase'
 
+var firebaseConfig = {
+    apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
+    authDomain: "justliftapp-52af0.firebaseapp.com",
+    databaseURL: "https://justliftapp-52af0.firebaseio.com",
+    projectId: "justliftapp-52af0",
+    storageBucket: "justliftapp-52af0.appspot.com",
+    messagingSenderId: "459347127352",
+    appId: "1:459347127352:web:c4dc3739b2d35ce1dccacd",
+    measurementId: "G-KRT9MBHW9T"
+  };
+  // Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 function CreateWorkoutScreen({navigation}) {
     function getExercise() {
@@ -30,8 +45,32 @@ function CreateWorkoutScreen({navigation}) {
     
     }
     
-    
-    let exercise = "";
+    function getcurrentExercises(){
+        var excs;
+        var ids = [];//ids of exercises in workout so far
+        return firebase.database().ref('workout1/').once('value').then( function(snapshot){
+            excs = snapshot.val();
+
+            //get ids for exercises
+            for(const i in excs){
+                ids.push({name : excs[i].name, sets : excs[i].sets, reps : excs[i].reps, weight : excs[i].weight});
+                //console.log(i);
+            }
+            return ids;
+            //console.log(ids)
+            // const listItems = ids.map((d) => <li key={d.name}>{d.name}{d.sets}{d.reps}{d.weight}</li>);
+            // return listItems;
+        })
+        //return "bad";
+    }
+
+    // var ref = firebase.database().ref();
+
+    // ref.on("value", function(snapshot) {
+    //     console.log(snapshot.val());
+    // }, function (error) {
+    //     console.log("Error: " + error.code);
+    // });
 
     return (
         <ScrollView style={{width: "100%"}}>
@@ -48,6 +87,19 @@ function CreateWorkoutScreen({navigation}) {
                     autoCapitalize = "none"
                 /> 
                 <ExercisePlaylistView />
+
+                {/* <View style={styles.container}>
+                {getcurrentExercises().then((val) => {
+                    val.map(x => 
+                    <TouchableOpacity
+                        key={x.id}
+                        style={styles.container}>
+                        <ExercisePlaylistView name={x.name}/>
+                    </TouchableOpacity>
+                    )}
+                )}
+              </View>  */}
+
                 <View style={styles.hContainer}>
                     <TouchableOpacity
                         //val is array of id and name for exercise categories

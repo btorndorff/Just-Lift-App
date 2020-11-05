@@ -3,10 +3,27 @@ import { View, StyleSheet, Text, Image, Button, TextInput, TouchableOpacity, } f
 import { ScrollView} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-community/picker';
 import ExercisePlaylistView from './ExercisePlaylistView';
+import * as firebase from 'firebase'
+
+var firebaseConfig = {
+    apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
+    authDomain: "justliftapp-52af0.firebaseapp.com",
+    databaseURL: "https://justliftapp-52af0.firebaseio.com",
+    projectId: "justliftapp-52af0",
+    storageBucket: "justliftapp-52af0.appspot.com",
+    messagingSenderId: "459347127352",
+    appId: "1:459347127352:web:c4dc3739b2d35ce1dccacd",
+    measurementId: "G-KRT9MBHW9T"
+  };
+  // Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 const ChooseCategory = ({route, navigation}) => {
     const [Category, setCategory] = useState({id: 10, name: "Abs"});
     const [Exercises, setExercises] = useState([]);
+
 
     function getExercises(id) {
       var myHeaders = new Headers();
@@ -26,11 +43,26 @@ const ChooseCategory = ({route, navigation}) => {
         })
     }
 
-    function addExercise(exc) {
-      //Update workout in database with the exercise added
+    function addExercise(exc) { //json object with id, name, etc..., for selected exercise
+        //Update workout in database with the exercise added
 
-      //navigate back to workout
-      navigation.navigate('CreateWorkoutScreen')
+        var postData = {
+            name: exc.name,
+            sets: 3,
+            reps: 8,
+            weight: 135,
+        };
+
+        //var newPostKey = firebase.database().ref().child('workout1').push().key;
+
+        var updates = {};
+        //updates['workout1/' + newPostKey] = postData;
+        updates['workout1/' + exc.id] = postData;
+
+        firebase.database().ref().update(updates);
+
+        //navigate back to workout
+        navigation.navigate('CreateWorkoutScreen')
     }
 
     const items = route.params.categories.map(x => <Picker.Item label={x.name} value={x.id} key={x.id} />)
@@ -46,6 +78,7 @@ const ChooseCategory = ({route, navigation}) => {
                   setCategory(itemValue);
                   getExercises(itemValue)
                     .then(exc => {
+                      //console.log(exc)
                       setExercises(exc)
                     });
                 }
@@ -56,7 +89,9 @@ const ChooseCategory = ({route, navigation}) => {
               <View style={styles.container}>
                 {Exercises.map(x => 
                   <TouchableOpacity
-                    onPress={() =>  addExercise(x)} //On Press Add to database and return to workout screen
+                    onPress={() =>  {
+                        //console.log(x) 
+                        addExercise(x)}} //On Press Add to database and return to workout screen
                     key={x.id}
                     style={styles.container}>
                       <ExercisePlaylistView name={x.name}/>

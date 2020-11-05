@@ -22,9 +22,9 @@ var firebaseConfig = {
     measurementId: "G-KRT9MBHW9T"
   };
   // Initialize Firebase
-  if(firebaseApp.apps.length == 0){
-    firebaseApp.initializeApp(firebaseConfig);
-  }
+if (!firebaseApp.apps.length) {
+  firebaseApp.initializeApp(config);
+}
 
 export default class HomeScreen extends React.Component {
 
@@ -42,6 +42,10 @@ export default class HomeScreen extends React.Component {
       if (user != null) {
         console.log('We are authenticated now!');
         Alert.alert('We authneticated with Fireabse!', `Hi ${user}`);
+      }
+      else{
+
+        console.log('did not authenticate, user was null');
       }
     });
   }
