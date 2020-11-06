@@ -5,6 +5,7 @@ import WorkoutPlaylistView from './WorkoutPlaylistView';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as firebase from 'firebase'
+import { useIsFocused } from '@react-navigation/native';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -45,8 +46,9 @@ function EditScreen({navigation}) {
         return ids;
     }
 
-    getWorkouts()
-        .then(wks => setWorkouts(wks))
+    if(useIsFocused()) {
+        getWorkouts().then(wks => setWorkouts(wks))
+    }
 
     return (
         <ScrollView style={{maxWidth: "100%"}}>
@@ -61,7 +63,6 @@ function EditScreen({navigation}) {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
             <View style={styles.container}>
-                
                 {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs}/>)}
             </View>
         </View>
