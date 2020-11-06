@@ -100,7 +100,7 @@ export default class HomeScreen extends React.Component {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user != null) {
         console.log('We are authenticated now!');
-        console.log('We authneticated with Fireabse!' + `Hi ${user.email}`);
+        console.log('We authneticated with Fireabse! ' + `Hi ${user.email}`);
         this.setState({user: firebaseApp.auth().currentUser})
       }
       else{
@@ -172,10 +172,10 @@ export default class HomeScreen extends React.Component {
     
   render() {
     if(this.state.loading === true){
-        return(<LoadingScreen/>)
+      return(<LoadingScreen/>)
     }
     else if(this.state.user === null){
-        return (
+      return (
         /*<View style={styles.container}>
             <LinearGradient
             colors={['#D4EFF5', '#B4EDFF', '#026479']}
@@ -233,10 +233,10 @@ export default class HomeScreen extends React.Component {
               </Form>
             </Container>
         );
-    //}
-    // else{
-    //     return (<FeedScreen/>)
-    // }
+    }
+    else{
+        return (<FeedScreen/>)
+    }
   }
 }
   /*async logIn() {
@@ -281,5 +281,5 @@ export default class HomeScreen extends React.Component {
     }
   }
 }*/
-      }
+
 
