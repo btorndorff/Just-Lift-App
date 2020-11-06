@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
 import * as firebase from 'firebase'
 import { useIsFocused } from '@react-navigation/native';
+import WorkoutPlaylistView from './WorkoutPlaylistView';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -20,18 +21,20 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-function CreateWorkoutScreen({navigation}) {
-    const [Workout, setWorkout] = useState({
+function CreateWorkoutScreen({navigation , route}) {
+    let made = false;
+    const initial = {
         name: "temp",
         exercises: {
-          0: {
+        0: {
             name: "temp",
             sets: 0,
             reps: 0,
             weight: 0
-          }
         }
-      })
+        }
+    }
+    const [Workout, setWorkout] = useState(initial);
     //create this workout in the database
     const userid = firebase.auth().currentUser.uid;
 
@@ -60,7 +63,6 @@ function CreateWorkoutScreen({navigation}) {
         if (userid != null) {
             return firebase.database().ref('users/' + userid + '/workouts/' + Workout.name + '/exercises').once('value').then( function(snapshot){
                 excs = snapshot.val();
-
                 //get ids for exercises
                 for(const i in excs){
                     ids.push({name : excs[i].name, sets : excs[i].sets, reps : excs[i].reps, weight : excs[i].weight});
@@ -75,23 +77,30 @@ function CreateWorkoutScreen({navigation}) {
     }
 
     function updateWorkout(){
-        var excs;
         var ids = [];
-        if (userid != null){
-            firebase.database().ref('users/' + userid + '/workouts/' + Workout.name).set({
-                name: Workout.name,
-                exercises: Workout.exercises
-            }) 
+        let a = JSON.parse(JSON.stringify({
+            name: Workout.name,
+            exercises: Workout.exercises
+        }))
+        console.log(a)
+        if (userid != null && !made){
+            made = true;
+            firebase.database().ref('users/' + userid + '/workouts/' + Workout.name).set(a) 
         }
     }
 
-    if(useIsFocused()) {
-        getcurrentExercises()
-            .then(workout=> {
-            setWorkout(workout)
-        })
-    }
-    
+   /*if(useIsFocused() && Workout.name != undefined && Workout.name != 'temp') {
+       let checked = false;
+       if (!checked) {
+           checked = true
+           getcurrentExercises()
+           .then(workout=> {
+               console.log(workout)
+               setExc(workout)
+           })
+       }  
+    }*/
+
     return (
         <ScrollView style={{width: "100%"}}>
             <View style={styles.container} isfoc>
@@ -99,12 +108,6 @@ function CreateWorkoutScreen({navigation}) {
                 {/* add support for user to add custom image */}
                 <Image 
                     source={require('../assets/add.jpg')} style={{height: 150, width: 150, marginTop: 50}}
-                    onLoad={() => {
-                        getcurrentExercises()
-                        .then(workout=> {
-                            setWorkout(workout);
-                        })
-                    }}
                 />
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
@@ -113,21 +116,23 @@ function CreateWorkoutScreen({navigation}) {
                     autoCapitalize = "none"
                     onChangeText = {value => {
                         //update name of workout in database
+                        setWorkout({name: value})
                         console.log(value);
                     }}
                 /> 
                 <View style={styles.container}>
-                    
+                    {/*Exercises.map(x => <ExercisePlaylistView name={x.name} sets={x.sets} reps={x.reps} weight={x.weight} key={x.name}/>)*/}
                 </View>
 
                 <View style={styles.hContainer}>
                     <TouchableOpacity
                         //val is array of id and name for exercise categories
                         onPress={() => getExercise().then((val) => {
-                            if (Workout.name != "temp") {
+                            if (Workout.name != undefined && Workout.name != 'temp') {
                                 updateWorkout();
-                                navigation.navigate('ChooseCategory', {categories: val}) 
+                                navigation.navigate('ChooseCategory', {categories: val, workoutName: Workout.name}) 
                             } else {
+                                console.log(Workout)
                                 Alert.alert("Please Enter the Workout Name First");
                             }
                         })}
@@ -140,6 +145,14 @@ function CreateWorkoutScreen({navigation}) {
                     title="Cancel"
                     color="#841584"
                 />
+                <View style={styles.hContainer}>
+                    <TouchableOpacity
+                        //val is array of id and name for exercise categories
+                        onPress={() => navigation.navigate('ViewWorkoutScreen', {workout: Workout.name})}
+                        style={styles.button_login}>
+                        <Text style={styles.buttonLText}>Finish</Text>  
+                    </TouchableOpacity> 
+                </View>
             </View>
         </ScrollView>
     );

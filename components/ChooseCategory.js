@@ -24,6 +24,7 @@ const ChooseCategory = ({route, navigation}) => {
     const [Category, setCategory] = useState({id: 10, name: "Abs"});
     const [Exercises, setExercises] = useState([]);
 
+    let {categories, workoutName} = route.params;
 
     function getExercises(id) {
       var myHeaders = new Headers();
@@ -43,9 +44,7 @@ const ChooseCategory = ({route, navigation}) => {
         })
     }
 
-    
-
-    const items = route.params.categories.map(x => <Picker.Item label={x.name} value={x.id} key={x.id} />)
+    const items = categories.map(x => <Picker.Item label={x.name} value={x.id} key={x.id} />)
 
     return (
         <ScrollView style={{width: "100%"}}>
@@ -69,7 +68,7 @@ const ChooseCategory = ({route, navigation}) => {
               <View style={styles.container}>
                 {Exercises.map(x => 
                   <TouchableOpacity
-                    onPress={() =>  navigation.navigate('ExerciseNums', {exercise: x})} 
+                    onPress={() =>  navigation.navigate('ExerciseNums', {exercise: x, workoutName: workoutName})} 
                     key={x.id}
                     style={styles.container}>
                       <ExercisePlaylistView name={x.name} reps={0} sets={0} weight={0}/>

@@ -3,12 +3,12 @@ import { View, StyleSheet, Text, Image} from 'react-native';
 
 function WorkoutPlaylistView({navigation, name, numExcs}) {
     return (
-        <View style={styles.container} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
+        <View style={styles.container} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen', {workout: name})}>
             <View style={styles.horContainer}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb} />
                 <View style={styles.container}>
                     <Text style={styles.leftText}>{name}</Text>
-                    <Text style={styles.leftText}>{numExcs} Exercises</Text>
+                    {/*<Text style={styles.leftText}>{numExcs - 1} Exercises</Text>*/}
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     leftText: {
         minWidth: "90%",
         textAlign: "left",
+        fontSize: 20,
     },
     thumb: {
         height: 100,

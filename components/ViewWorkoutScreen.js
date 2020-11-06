@@ -19,10 +19,11 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-function ViewWorkoutScreen({navigation}) {
+function ViewWorkoutScreen({navigation, route}) {
     const [Workout, setWorkout] = useState([])
+    const {workout} = route.params;
 
-    function getcurrentExercises(){
+    /*function getcurrentExercises(){
         var excs;
         var ids = [];//ids of exercises in workout so far
         return firebase.database().ref('workout1/').once('value').then( function(snapshot){
@@ -38,6 +39,25 @@ function ViewWorkoutScreen({navigation}) {
             // return listItems;
         })
         //return "bad";
+    }*/
+
+    function getcurrentExercises(){
+        var excs;
+        var ids = [];//ids of exercises in workout so far
+        if (firebase.auth().currentUser.uid != null) {
+            return firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/workouts/' + workout + '/exercises').once('value').then( function(snapshot){
+                excs = snapshot.val();
+                //get ids for exercises
+                for(const i in excs){
+                    ids.push({name : excs[i].name, sets : excs[i].sets, reps : excs[i].reps, weight : excs[i].weight});
+                }
+                return ids;
+                //console.log(ids)
+                // const listItems = ids.map((d) => <li key={d.name}>{d.name}{d.sets}{d.reps}{d.weight}</li>);
+                // return listItems;
+            })
+        }
+        //return "bad";
     }
 
     return (
@@ -50,14 +70,13 @@ function ViewWorkoutScreen({navigation}) {
                             setWorkout(workout)
                         })
                     }}/>
-                <Text style={{fontSize: 30}}>Push Day</Text>
-                <Text>6 Excercises</Text>
+                <Text style={{fontSize: 30}}>{workout}</Text>
                 <Button
                     onPress={() => {
                         getcurrentExercises()
                         .then(workout=> {
                             console.log(workout);
-                            navigation.navigate('RecordWorkoutExercise',{name: "Pull Day", i:0, exercises: Workout})
+                            navigation.navigate('RecordWorkoutExercise',{name: workout, i:0, exercises: Workout})
                         })
                     }}
                     title="Start Workout"

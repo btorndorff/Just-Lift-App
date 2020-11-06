@@ -19,8 +19,9 @@ if (!firebase.apps.length) {
 }
 
 const ChooseCategory = ({route, navigation}) => {
-    const [Exercise, setExercise] = useState({name: route.params.exercise.name, reps: 0, sets: 0, weight: 0})
-    
+    let {exercise , workoutName} = route.params;
+    const [Exercise, setExercise] = useState({name: exercise.name, reps: 0, sets: 0, weight: 0});
+
     function addExercise(exc) { //json object with id, name, etc..., for selected exercise
         //Update workout in database with the exercise added
 
@@ -31,14 +32,17 @@ const ChooseCategory = ({route, navigation}) => {
             weight: exc.weight,
         };
 
+        console.log(exercise.id)
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/workouts/' + workoutName + '/exercises/' + exercise.id).set(postData)
         //var newPostKey = firebase.database().ref().child('workout1').push().key;
 
+        /*
         var updates = {};
         //updates['workout1/' + newPostKey] = postData;
-        updates['workout1/' + route.params.exercise.id] = postData;
+        updates['users/' + firebase.auth().currentUser.uid + '/workouts/' + workoutName + '/exercises/' + exercise.id] = postData;
 
         firebase.database().ref().update(updates);
-
+        */
         //navigate back to workout
         navigation.navigate('CreateWorkoutScreen')
     }
