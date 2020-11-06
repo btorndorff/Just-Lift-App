@@ -25,18 +25,18 @@ if (!firebaseApp.apps.length) {
 function UserScreen({navigation}) {
     const [User, setUser] = useState(firebaseApp.auth().currentUser);
         
-    function logOut(){
+    /*function logOut(){
         firebaseApp.auth().signOut()
             .then(setUser(null))
             .then(navigation.navigate("HomeScreen"));
-    }
+    }*/
 
     
     return (
         <ScrollView style={{width:"100%"}}>
             <View style={styles.container}>
                 {/*AVI*/}
-                <Button title="logout" onPress={()=> logOut()}/>
+                {/*<Button title="logout" onPress={()=> logOut()}/>*/}
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>
                 {/*Followers,Following,Workouts*/}
                 <View style={styles.follows}>
