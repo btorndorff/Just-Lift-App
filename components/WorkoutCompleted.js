@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function EditScreen({navigation, route}) {
+function WorkoutCompleted({navigation, route}) {
     const {name} = route.params;
     return (
         <View style={styles.container}>
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default EditScreen;
+export default WorkoutCompleted;

@@ -74,8 +74,8 @@ function ViewWorkoutScreen({navigation, route}) {
                 <Button
                     onPress={() => {
                         getcurrentExercises()
-                        .then(workout=> {
-                            console.log(workout);
+                        .then(wk=> {
+                            console.log(wk);
                             navigation.navigate('RecordWorkoutExercise',{name: workout, i:0, exercises: Workout})
                         })
                     }}
