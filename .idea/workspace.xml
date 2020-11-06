@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e88b72e-414f-4fbc-a364-2d32e8e47a73" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CreateWorkoutScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/CreateWorkoutScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UserScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,10 +45,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1604628847137" />
-    <state x="110" y="120" width="1060" height="440" key="AVDManager" timestamp="1604630420363">
+    <state x="110" y="120" width="1060" height="440" key="AVDManager" timestamp="1604633413620">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1604630420363" />
+    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1604633413620" />
     <state x="422" y="82" key="FileChooserDialogImpl" timestamp="1604631318888">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
