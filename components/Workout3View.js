@@ -1,11 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
+import WorkoutPlaylistView from './WorkoutPlaylistView';
+import firebase from 'firebase'
+import { useIsFocused } from '@react-navigation/native';
+
+var firebaseConfig = {
+    apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
+    authDomain: "justliftapp-52af0.firebaseapp.com",
+    databaseURL: "https://justliftapp-52af0.firebaseio.com",
+    projectId: "justliftapp-52af0",
+    storageBucket: "justliftapp-52af0.appspot.com",
+    messagingSenderId: "459347127352",
+    appId: "1:459347127352:web:c4dc3739b2d35ce1dccacd",
+    measurementId: "G-KRT9MBHW9T"
+  };
+  // Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 function Workout3View({navigation}) {
+    const [Workouts, setWorkouts] = useState([]);
+    const userid = firebase.auth().currentUser.uid;
+
+    function getWorkouts(){
+        var wks;
+        var ids = [];
+        if (userid != null){
+            return firebase.database().ref('users/' + userid + '/workouts').once('value').then( function(snapshot){
+                wks = snapshot.val();
+                let x = Object.keys(wks)
+                if(x.length > 1) {
+                    for(const i in wks){
+                        ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
+                    }
+                    ids.splice(ids.findIndex(x => x.name === 'temp'),1)
+                    let t = ids;
+                    ids = [];
+                    for (let j = 0; j < t.length; j++) {
+                        if (j < 3) {
+                            ids.push(t[j]);
+                        } 
+                    }
+                    return ids;
+                }
+            
+                return ids;
+            })
+        }
+        return ids;
+    }
+
+    if(useIsFocused()) {
+        getWorkouts().then(wks => setWorkouts(wks))
+    }
+
     return (
         <View style={styles.container}>
             <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Workouts</Text>
-            {/*first workout*/}
+            
+            {/*first workout
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
@@ -14,7 +68,7 @@ function Workout3View({navigation}) {
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
-            {/*second workout*/}
+            {/*second workout
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
@@ -23,7 +77,7 @@ function Workout3View({navigation}) {
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
-            {/*third workout*/}
+            {/*third workout
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
                 <View style={styles.container}>
@@ -31,6 +85,9 @@ function Workout3View({navigation}) {
                     <Text style={styles.leftText}>9 Exercises</Text>
                 </View>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
+            </View> */}
+            <View style={styles.container}>
+                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs}/>)}
             </View>
             {/*See More*/}
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('EditScreen')}>

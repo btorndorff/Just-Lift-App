@@ -22,7 +22,7 @@ function RecordWorkoutExercise({route, navigation}) {
                         setExercise(exercises[i]);
                     } else {
                         navigation.navigate('WorkoutCompleted',{name: name + " " + date})
-                    }
+                    };
                 }}
                 style={styles.Button1}> 
                     <Text style={styles.ButtonText}>Next Exercise</Text>

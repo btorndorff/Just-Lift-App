@@ -37,7 +37,8 @@ function EditScreen({navigation}) {
                     for(const i in wks){
                         ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
                     }
-                    ids.splice(ids.indexOf({name: "temp", numExcs: 1}),1)
+                    console.log()
+                    ids.splice(ids.findIndex(x => x.name === 'temp'),1)
                 }
             
                 return ids;
