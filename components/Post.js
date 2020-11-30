@@ -1,17 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function Post() {
+function Post(workout) {
+    
+
     return (
         <View style={styles.container}>
             <View style={styles.horContainer}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>
                 <View style={{alignSelf: "center"}}>
-                    <Text> Jeffery Lai</Text>
-                    <Text>September 19, 2020 at 4:35 PM</Text>
+                    <Text>Jeffery Lai</Text>
+                    <Text>{workout.date}</Text>
                 </View>
             </View>
-            <Text style={{textAlign: "left", minWidth: "100%", fontSize: 20}}>Saturday Workout</Text>
+            <Text style={{textAlign: "left", minWidth: "100%", fontSize: 20}}>{workout.name}</Text>
             <Text style={{textAlign: "left", minWidth: "100%", marginBottom: 10}}>Great Awesome workout time</Text>
             <View style={styles.horContainer2}>
                 <View>
@@ -24,7 +26,7 @@ function Post() {
                 </View>
                 <View>
                     <Text style={{textAlign: "left"}}>Volume</Text>
-                    <Text style={{textAlign: "left", fontSize: 20}}>7,098 lb</Text>
+                    <Text style={{textAlign: "left", fontSize: 20}}>{workout.volume}</Text>
                 </View>
             </View>
             <Image source={require("../assets/wallpaper5.jpg")} style={styles.Image}/>

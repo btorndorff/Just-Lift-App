@@ -5,6 +5,7 @@ import Post from './Post';
 import Workout3View from './Workout3View'
 import * as Facebook from 'expo-facebook';
 import * as firebaseApp from 'firebase'
+import { useIsFocused } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
 
 var firebaseConfig = {
@@ -24,14 +25,33 @@ if (!firebaseApp.apps.length) {
 
 function UserScreen({navigation}) {
     const [User, setUser] = useState(firebaseApp.auth().currentUser);
-        
+    const [Posts, setPosts] = useState([])
+    const userid = firebaseApp.auth().currentUser.uid;
+
+    function getPosts(){
+        var p;
+        var ids = [];
+        if (userid != null){
+            return firebaseApp.database().ref('users/' + userid + '/completed_workouts').once('value').then( function(snapshot){
+                p = snapshot.val();
+                for(const i in p){
+                    ids.push({name: p[i].name, volume: p[i].volume, date: p[i].date});
+                }
+                return ids;
+            })
+        }
+        return ids;
+    }
     /*function logOut(){
         firebaseApp.auth().signOut()
             .then(setUser(null))
             .then(navigation.navigate("HomeScreen"));
     }*/
 
-    
+    if(useIsFocused()) {
+        getPosts().then(p => setPosts(p))
+    }
+
     return (
         <ScrollView style={{width:"100%"}}>
             <View style={styles.container}>
@@ -59,8 +79,7 @@ function UserScreen({navigation}) {
 
                 {/*Social Posts*/}
                 <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
-                <Post />
-                <Post />
+                {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} />)}
             </View>
         </ScrollView>
     );
