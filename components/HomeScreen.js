@@ -10,6 +10,7 @@ import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store';
 import * as firebaseApp from 'firebase'
 import {Container, Content, Header, Form, Input, Item, Button, Label} from 'native-base'
+import RegisterScreen from './RegisterScreen'
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -27,8 +28,7 @@ if (!firebaseApp.apps.length) {
 }
 var database = firebaseApp.database();
 
-export default class HomeScreen extends React.Component {
-
+export default class HomeScreen extends React.Component { 
   constructor(props) {
     super(props);
     let u = firebaseApp.auth().currentUser;
@@ -41,7 +41,7 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-  signUpUser = (email, password) => {
+  signUpUser = (email, password, firstName, lastName) => {
     try {
       if (this.state.password < 6) {
         alert("Password must be at least 6 characters");
@@ -53,6 +53,10 @@ export default class HomeScreen extends React.Component {
           console.log(user.user.uid)
           firebaseApp.database().ref('users/' + user.user.uid).set({
             email: user.user.email,
+            avi: {avi: "none"},
+            name: {first: firstName, last: lastName},
+            social: {followers: {temp: "temp"}, following: {temp: 'temp'}},
+            completed_workouts: {temp: "temp"},
             workouts: {
               temp: {
                 name: "temp",
@@ -72,6 +76,7 @@ export default class HomeScreen extends React.Component {
     catch (error) {
       console.log(error.toString())
     }
+    
   }
 
   loginUser = (email, password) => {
@@ -177,6 +182,18 @@ export default class HomeScreen extends React.Component {
             <Container style={{flex:1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
               <Form style={{width: "100%"}}>
                 <Item floatingLabel>
+                  <Label>First Name</Label>
+                  <Input autoCorrect={false} autoCapitalize="none"
+                    onChangeText={firstName => this.setState({firstName})}/>
+                </Item>
+                
+                <Item floatingLabel>
+                  <Label>Last Name</Label>
+                  <Input autoCorrect={false} autoCapitalize="none"
+                    onChangeText={lastName => this.setState({lastName})}/>
+                </Item>
+
+                <Item floatingLabel>
                   <Label>Email</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={email => this.setState({email})}/>
@@ -195,7 +212,7 @@ export default class HomeScreen extends React.Component {
                 </Button>
                 <Button style={{marginTop: 10}}
                   full rounded primary
-                  onPress={() => this.signUpUser(this.state.email, this.state.password)}>
+                  onPress={() => this.signUpUser(this.state.email, this.state.password, this.state.firsName, this.state.lastName)}>
                   <Text style={{color: 'white'}}>Register</Text>
                 </Button>
               </Form>

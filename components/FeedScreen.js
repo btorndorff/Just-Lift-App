@@ -62,6 +62,7 @@ function Feed() {
           <Stack.Screen name="ChooseCategory" component={ChooseCategory} />
           <Stack.Screen name="ExerciseNums" component={ExerciseNums} />
           <Stack.Screen name="WorkoutCompleted" component={WorkoutCompleted} />
+          <Stack.Screen name="SocialScreen" component={SocialScreen} />
         </Stack.Navigator>
     );
   }

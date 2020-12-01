@@ -64,7 +64,7 @@ function EditScreen({navigation}) {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
             <View style={styles.container}>
-                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs}/>)}
+                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs} />)}
             </View>
         </View>
         </ScrollView>

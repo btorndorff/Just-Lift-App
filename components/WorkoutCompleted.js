@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase'
+import * as ImagePicker from 'expo-image-picker';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -20,6 +21,9 @@ if (!firebase.apps.length) {
 }
 
 function WorkoutCompleted({navigation, route}) {
+    const [image, setImage] = useState(<Image source={require("../assets/add.jpg")} style={styles.thumb} />);
+    const [source, setSource] = useState("../assets/add.jpg");
+    const [Description, setDescription] = useState("");
     const {name, workout} = route.params;
 
     function saveWorkout() {
@@ -39,27 +43,66 @@ function WorkoutCompleted({navigation, route}) {
             }
             hour = hour % 12;
         }
-        let time = hour + ":" + d.getMinutes();
+        let mins = d.getMinutes();
+        if (mins < 10) {
+            mins = "0" + mins;
+        }
+        let time = hour + ":" + mins;
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " at " + time + " " + M; 
 
 
         var postData = {
-            name: name,
+            name: name + " " + d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear(),
             date: date,
-            volume: volume
+            volume: volume,
+            image: source,
+            description: Description,
+            workout: name,
+            user: firebase.auth().currentUser.uid
         };
         firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/completed_workouts/' + Date.now()).set(postData)
     }
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+          setImage(<Image source={{uri: result.uri}} style={styles.thumb} />);
+          setSource(result.uri)
+        }
+    };
 
     return (
         <View style={styles.container}>
             <Text style={{fontSize: 35, fontWeight: "bold"}}>Workout Completed</Text>
             <Text style={{fontSize: 30, marginVertical: "5%"}}>{name}</Text>
             <TouchableOpacity
+                onPress={pickImage}
+                style={styles.thumb}> 
+                   {image}
+            </TouchableOpacity> 
+            <TextInput style = {styles.input}
+                    underlineColorAndroid = "transparent"
+                    placeholder = "How was the workout?"
+                    placeholderTextColor = "#9a73ef"
+                    autoCapitalize = "none"
+                    onChangeText = {value => {
+                        //update name of workout in database
+                        setDescription(value)
+                    }}
+                /> 
+            <TouchableOpacity
                 onPress={() => {
                     saveWorkout();
-                    navigation.navigate('ChooseWorkoutScreen');
+                    navigation.navigate('SocialScreen');
                 }}
                 style={styles.Button2}> 
                     <Text style={styles.ButtonText}>Finish</Text>
@@ -73,16 +116,17 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
-        alignSelf: "center",
-        top: "10%"
+        top: "5%"
     },
     leftText: {
         minWidth: "90%",
         textAlign: "left",
     },
     thumb: {
-        height: 100,
-        width: 100,
+        height: 200,
+        width: 200,
+        marginBottom: 50,
+        alignSelf: "center"
     },
     horContainer: {
         flex: 1,
@@ -109,7 +153,16 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center",
         textTransform: "uppercase"
-    }
+    },
+    input: {
+        marginBottom: 15,
+        height: "10%",
+        width: 300,
+        padding: 10,
+        borderColor: '#7a42f4',
+        borderWidth: 1,
+        textAlign: "center" 
+     }
 })
 
 export default WorkoutCompleted;

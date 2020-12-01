@@ -21,7 +21,7 @@ function RecordWorkoutExercise({route, navigation}) {
                         setIndex(i);
                         setExercise(exercises[i]);
                     } else {
-                        navigation.navigate('WorkoutCompleted',{name: name + " " + date, workout: exercises})
+                        navigation.navigate('WorkoutCompleted',{name: name, workout: exercises})
                     };
                 }}
                 style={styles.Button1}> 

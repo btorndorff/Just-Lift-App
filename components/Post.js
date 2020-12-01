@@ -1,24 +1,28 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
+import { Dimensions } from 'react-native';
+const win = Dimensions.get('window');
 
 function Post(workout) {
-    
-
+    let image = <Image source={require("../assets/wallpaper5.jpg")} style={styles.ImageNone}/>
+    if (workout.image != "../assets/add.jpg") {
+        image = <Image source={{uri: workout.image}} style={styles.Image}/>
+    }
     return (
         <View style={styles.container}>
             <View style={styles.horContainer}>
                 <Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>
                 <View style={{alignSelf: "center"}}>
-                    <Text>Jeffery Lai</Text>
+                    <Text>Benjamin Orndorff</Text>
                     <Text>{workout.date}</Text>
                 </View>
             </View>
             <Text style={{textAlign: "left", minWidth: "100%", fontSize: 20}}>{workout.name}</Text>
-            <Text style={{textAlign: "left", minWidth: "100%", marginBottom: 10}}>Great Awesome workout time</Text>
+            <Text style={{textAlign: "left", minWidth: "100%", marginBottom: 10}}>{workout.description}</Text>
             <View style={styles.horContainer2}>
                 <View>
                     <Text style={{textAlign: "left"}}>Workout</Text>
-                    <Text style={{textAlign: "left", fontSize: 20}}>Pull Day</Text>
+                    <Text style={{textAlign: "left", fontSize: 20}}>{workout.workout}</Text>
                 </View>
                 <View>
                     <Text style={{textAlign: "left"}}>Time</Text>
@@ -29,7 +33,7 @@ function Post(workout) {
                     <Text style={{textAlign: "left", fontSize: 20}}>{workout.volume}</Text>
                 </View>
             </View>
-            <Image source={require("../assets/wallpaper5.jpg")} style={styles.Image}/>
+            {image}
         </View>
     );
 }
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         backgroundColor: "#fff",
         padding: 10,
-        marginBottom: "25%",
+        marginBottom: "10%",
     },
     horContainer: {
         flex: 1,
@@ -64,13 +68,18 @@ const styles = StyleSheet.create({
     Image : {
         marginTop: 10,
         aspectRatio: (600 / 330),
-        width: '100%',
+        width:  '100%',
         height: '100%',
-        maxWidth: 600,
-        maxHeight: 330,
+        maxWidth: win.width,
+        maxHeight: 250,
         marginLeft: 'auto',
         marginRight: 'auto',
-        resizeMode: 'contain',
+        resizeMode: "stretch",
+    },
+    ImageNone : {
+        height: 0,
+        width: 0,
+        margin: 0
     }
 })
 
