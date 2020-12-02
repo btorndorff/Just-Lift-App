@@ -28,9 +28,12 @@ if (!firebaseApp.apps.length) {
 function UserScreen({navigation}) {
     const [User, setUser] = useState(firebaseApp.auth().currentUser);
     const [Posts, setPosts] = useState([])
-    const userid = firebaseApp.auth().currentUser.uid;
-    const [Source, setSource] = useState()
-    const [AVI, setAVI] = useState(<Image source={require("../assets/add.jpg")} style={styles.avi} />)
+    var userid = 'none'
+    if (firebaseApp.auth().currentUser.uid) {
+        userid = firebaseApp.auth().currentUser.uid;
+    }
+    //const [Source, setSource] = useState()
+    //const [AVI, setAVI] = useState(<Image source={require("../assets/add.jpg")} style={styles.avi} />)
     const [NumWorkouts, setNumWorkouts] = useState(0)
     const [NumFollowers, setNumFollowers] = useState(0)
     const [NumFollowing, setNumFollowing] = useState(0)
@@ -82,7 +85,7 @@ function UserScreen({navigation}) {
           var postData = {
             avi: Source
           }
-          firebaseApp.database().ref('users/' + firebaseApp.auth().currentUser.uid + '/avi').set(postData)
+          firebaseApp.database().ref('users/' + userid + '/avi').set(postData)
         }
     };
     
@@ -94,9 +97,9 @@ function UserScreen({navigation}) {
     if(useIsFocused()) {
         getPosts().then(p => setPosts(p))
         getUser().then(x => {
-            setNumWorkouts(Object.keys(x.workouts).length)
-            setNumFollowers(Object.keys(x.social.followers).length)
-            setNumFollowing(Object.keys(x.social.following).length)
+            setNumWorkouts(Object.keys(x.workouts).length - 1)
+            setNumFollowers(Object.keys(x.social.followers).length - 1)
+            setNumFollowing(Object.keys(x.social.following).length - 1)
         })
         /*getUser().then(x => {
             setSource(x.avi.avi)
@@ -129,7 +132,7 @@ function UserScreen({navigation}) {
                     <TouchableOpacity
                         onPress={pickImage}
                         style={styles.avi}> 
-                            {AVI}
+                            {/*AVI*/}
                     </TouchableOpacity> 
                     {/*Followers,Following,Workouts*/}
                     <View style={styles.follows}>
@@ -152,7 +155,7 @@ function UserScreen({navigation}) {
     
                     {/*Social Posts*/}
                     <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
-                    {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={x.image} description={x.description} workout={x.workout}/>)}
+                    {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={x.image} description={x.description} workout={x.workout} userid={userid}/>)}
                 </View>
             </ScrollView>
         );

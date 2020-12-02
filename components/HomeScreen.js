@@ -35,42 +35,29 @@ export default class HomeScreen extends React.Component {
     this.state = ({
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
       loading: false,
       token: null,
       user: u
     });
   }
 
-  signUpUser = (email, password, firstName, lastName) => {
+  signUpUser = (email, password) => {
     try {
       if (this.state.password < 6) {
         alert("Password must be at least 6 characters");
         return;
       }
-
       firebaseApp.auth().createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          console.log(user.user.uid)
-          firebaseApp.database().ref('users/' + user.user.uid).set({
-            email: user.user.email,
-            avi: {avi: "none"},
-            name: {first: firstName, last: lastName},
-            social: {followers: {temp: "temp"}, following: {temp: 'temp'}},
-            completed_workouts: {temp: "temp"},
-            workouts: {
-              temp: {
-                name: "temp",
-                exercises: {
-                  0: {
-                    name: "temp",
-                    sets: 0,
-                    reps: 0,
-                    weight: 0
-                  }
-                }
-              }
-            }
-          })
+        .then((x) => {
+          console.log(x.user.uid)
+          /*let dest = 'users/' + firebaseApp.auth().currentUser.uid;
+          firebaseApp.database().ref(dest).set({
+            email: email,
+            workouts: { temp: { name: "temp", exercises: { 0: { name: "temp", sets: 0, reps: 0, weight: 0 } } } },
+            social: { followers: { temp: "temp" }, following: { temp: "temp" } } 
+          });*/
         })
     }
     catch (error) {
@@ -212,7 +199,7 @@ export default class HomeScreen extends React.Component {
                 </Button>
                 <Button style={{marginTop: 10}}
                   full rounded primary
-                  onPress={() => this.signUpUser(this.state.email, this.state.password, this.state.firsName, this.state.lastName)}>
+                  onPress={() => this.signUpUser(this.state.email, this.state.password)}>
                   <Text style={{color: 'white'}}>Register</Text>
                 </Button>
               </Form>
@@ -220,7 +207,7 @@ export default class HomeScreen extends React.Component {
         );
     }
     else{
-        return (<FeedScreen/>)
+        return (<FeedScreen name={this.state.firstName + " " + this.state.lastName}/>)
     }
   }
 }

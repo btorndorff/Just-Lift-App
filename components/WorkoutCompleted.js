@@ -38,10 +38,13 @@ function WorkoutCompleted({navigation, route}) {
         if (hour === 12) {
             hour = 12;
         } else {
-            if (hour % 12 != hour) {
+            if (hour > 11) {
                 M = "PM"
             }
             hour = hour % 12;
+            if (hour === 0) {
+                hour = 12;
+            }
         }
         let mins = d.getMinutes();
         if (mins < 10) {
@@ -51,15 +54,15 @@ function WorkoutCompleted({navigation, route}) {
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " at " + time + " " + M; 
 
-
         var postData = {
-            name: name + " " + d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear(),
+            name: name + " " + (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear(),
             date: date,
+            time: d.toString(),
             volume: volume,
             image: source,
             description: Description,
             workout: name,
-            user: firebase.auth().currentUser.uid
+            userid: firebase.auth().currentUser.uid
         };
         firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/completed_workouts/' + Date.now()).set(postData)
     }
@@ -102,7 +105,7 @@ function WorkoutCompleted({navigation, route}) {
             <TouchableOpacity
                 onPress={() => {
                     saveWorkout();
-                    navigation.navigate('SocialScreen');
+                    navigation.navigate('ChooseWorkoutScreen');
                 }}
                 style={styles.Button2}> 
                     <Text style={styles.ButtonText}>Finish</Text>
