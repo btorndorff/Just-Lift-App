@@ -11,6 +11,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as firebaseApp from 'firebase'
 import {Container, Content, Header, Form, Input, Item, Button, Label} from 'native-base'
 import RegisterScreen from './RegisterScreen'
+import { FontAwesome } from '@expo/vector-icons';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -198,28 +199,41 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
             </LinearGradient>
         </View>*/
+            
             <Container style={{flex:1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
+              <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
+            <Text style={styles1.toptitle}>JustLift</Text>
               <Form style={{width: "100%"}}>
                 <Item floatingLabel>
-                  <Label>First Name</Label>
+                  <Label style={styles1.iput}>First Name</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={firstName => this.setState({firstName})}/>
                 </Item>
                 
                 <Item floatingLabel>
-                  <Label>Last Name</Label>
+                  <Label style={styles1.iput}>Last Name</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={lastName => this.setState({lastName})}/>
                 </Item>
 
                 <Item floatingLabel>
-                  <Label>Email</Label>
+                  <Label style={styles1.iput}>Email</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={email => this.setState({email})}/>
                 </Item>
 
                 <Item floatingLabel>
-                  <Label>Password</Label>
+                  <Label style={styles1.iput}>Password</Label>
                   <Input autoCorrect={false} autoCapitalize="none" secureTextEntry={true}
                     onChangeText={password => this.setState({password})}/>
                 </Item>
@@ -235,6 +249,7 @@ export default class HomeScreen extends React.Component {
                   <Text style={{color: 'white'}}>Register</Text>
                 </Button>
               </Form>
+              </LinearGradient>
             </Container>
         );
     }
@@ -285,5 +300,16 @@ export default class HomeScreen extends React.Component {
     }
   }
 }*/
+const styles1 = StyleSheet.create({
+  iput : {
+
+    color: "white"
+  },
+  toptitle :{
+
+    fontSize: 75,
+    fontWeight: "bold"
+  }
+});
 
 

@@ -54,7 +54,7 @@ export default class LoginScreen extends React.Component {
             <Text style={styles.buttonLText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate('Home')} style={styles.button_login}>
+            onPress={() => this.props.navigation.navigate('JustLift')} style={styles.button_login}>
             <Text style={styles.buttonLText}>Back to Home Screen</Text>
             </TouchableOpacity>
             <Button title="Login With Facebook" onPress={()=>this.logIn()}/>

@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
-        maxWidth: '100%'
+        maxWidth: '100%',
+        // backgroundColor: "lightblue",
+        margin: 5
     },
     arrow: {
         height: 50,

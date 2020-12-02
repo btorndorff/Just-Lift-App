@@ -9,6 +9,7 @@ import { useIsFocused } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -125,13 +126,25 @@ function UserScreen({navigation}) {
         return (<HomeScreen />)
     } else {
         return (
+            <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
             <ScrollView style={{width:"100%"}}>
                 <View style={styles.container}>
                     {/*AVI*/}
                     <Button title="logout" onPress={()=> logOut()}/>
                     <TouchableOpacity
                         onPress={pickImage}
-                        style={styles.avi}> 
+                        style={styles.avi}>
+                         
                             {/*AVI*/}
                     </TouchableOpacity> 
                     {/*Followers,Following,Workouts*/}
@@ -154,10 +167,11 @@ function UserScreen({navigation}) {
                     <Workout3View navigation={navigation}/>
     
                     {/*Social Posts*/}
-                    <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
+                    <Text style={{fontSize: 40 , minWidth: "99%", textAlign: "center", margin: 10, fontWeight: "bold"}}>Activity</Text>
                     {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={x.image} description={x.description} workout={x.workout} userid={userid}/>)}
                 </View>
             </ScrollView>
+            </LinearGradient>
         );
     }
     
@@ -184,6 +198,7 @@ const styles = StyleSheet.create({
         height: 150,
         width: 150,
         borderRadius: 75,
+        backgroundColor: "white"
     },
     follows: {
         flex: 1,

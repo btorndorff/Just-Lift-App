@@ -5,6 +5,8 @@ import Post from "./Post"
 import * as firebase from 'firebase'
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 var firebaseConfig = {
@@ -75,6 +77,17 @@ function SocialScreen({navigation}) {
     }
 
     return (
+        <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
         <ScrollView style={{width:"100%"}}>
             <TouchableOpacity
                 onPress={() => navigation.navigate('FriendScreen')}
@@ -85,6 +98,7 @@ function SocialScreen({navigation}) {
                 {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={x.image} description={x.description} workout={x.workout} avi={x.avi} userid={x.userid}/>)}
             </View>
         </ScrollView>
+        </LinearGradient>
     );
 }
 

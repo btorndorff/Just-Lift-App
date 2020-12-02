@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image, Button} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ExercisePlaylistView from './ExercisePlaylistView'
 import * as firebase from 'firebase'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -61,7 +62,7 @@ function ViewWorkoutScreen({navigation, route}) {
     }
 
     return (
-        <ScrollView style={{width: "100%"}}>
+        <ScrollView style={{width: "100%", backgroundColor : "lightblue"}}>
             <View style={styles.container}>
                 <Image source={require('../assets/wallpaper5.jpg')} style={{height: 200, width: 200, marginTop: 50}}
                     onLoad={() => {
@@ -70,8 +71,8 @@ function ViewWorkoutScreen({navigation, route}) {
                             setWorkout(workout)
                         })
                     }}/>
-                <Text style={{fontSize: 30}}>{workout}</Text>
-                <Button
+                <Text style={{fontSize: 30, margin: 10}}>{workout}</Text>
+                <TouchableOpacity
                     onPress={() => {
                         getcurrentExercises()
                         .then(wk=> {
@@ -79,9 +80,12 @@ function ViewWorkoutScreen({navigation, route}) {
                             navigation.navigate('RecordWorkoutExercise',{name: workout, i:0, exercises: Workout})
                         })
                     }}
+                    
                     title="Start Workout"
                     style={styles.button_login}
-                />
+                >
+                <Text style={styles.button_text}>Start Workout</Text>   
+                </TouchableOpacity>
                 <View style={styles.container}>
                     {Workout.map(x => <ExercisePlaylistView name={x.name} sets={x.sets} reps={x.reps} weight={x.weight} key={x.name}/>)}
                 </View>
@@ -108,10 +112,17 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     button_login: {
-        backgroundColor: "black",
+        backgroundColor: "#009688",
+        // backgroundColor: "#42d1f5",
         padding: 20,
+        margin: 10,
         borderRadius: 5,
     },
+    button_text:{
+        fontSize: 20
+
+
+    }
 })
 
 export default ViewWorkoutScreen;

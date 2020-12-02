@@ -4,19 +4,37 @@ import { NavigationContainer, NavigationHelpersContext } from '@react-navigation
 import Workout3View from './Workout3View'
 import Icon from 'react-native-vector-icons/Feather';
 import * as firebase from 'firebase'
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 function ChooseWorkoutScreen({navigation}) {
     return(
+        <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
         <ScrollView style={{width:"100%"}}>
             <View style={styles.container}>
                 <Workout3View navigation={navigation}/>
-                <Button
-                    onPress={() => navigation.navigate('CreateWorkoutScreen')}
-                    title="Create New Workout"
-                    color="#841584"
-                />
+        
+                {/* <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.navigate('CreateWorkoutScreen')}>
+                    <Image source={require("../assets/add.jpg")} style={styles.thumb}/>
+                    <View style={styles.container}>
+                        <Text style={styles.leftText}>Create Workout</Text>
+                    </View>
+                    <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
+                </View> */}
             </View>
+            
         </ScrollView>
+        </LinearGradient>
     );   
 }  
 
@@ -25,6 +43,18 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
+        alignSelf: "center",
+        margin: 10,
+        
+    },
+    crcontainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "flex-start",
+        alignSelf: "center",
+        margin: 10,
+        backgroundColor : "#505050"
+        
     },
     bottom: {
         flex: 1,
@@ -35,13 +65,19 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#FFFFFF',
       },
+      arrow: {
+        height: 50,
+        width: 50,
+        alignSelf: "center"
+    },
     hcontainer: {
         flex: 1,
         justifyContent: 'space-between',
         backgroundColor: '#ecf0f1',
         padding: 8,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        
     
     
       },
@@ -50,17 +86,14 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 5,
       },
-    horContainer: {
+      horContainer: {
         flex: 1,
-        minWidth: "100%",
         flexDirection: "row",
         alignItems: "flex-start",
+        backgroundColor: "#505050",
+        margin: 10 
     },
-    arrow: {
-        height: 50,
-        width: 50,
-        //alignSelf: "bottom"
-    },
+    
     input: {
         margin: 15,
         height: 40,
@@ -75,6 +108,17 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingBottom: 10,
       },
+      leftText: {
+        minWidth: "90%",
+        textAlign: "left",
+        fontSize: 20,
+        color: "white",
+        fontWeight: "bold"
+    },
+    thumb: {
+        height: 100,
+        width: 100,
+    },
 })
 
 export default ChooseWorkoutScreen;
