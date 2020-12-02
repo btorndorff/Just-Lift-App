@@ -23,8 +23,9 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.yourcompany.yourappname",
-      "versionCode": 1
+      "package": "gains.cs4720.justliftapp",
+      "versionCode": 2,
+      "permissions": []
     }
   }
 }
