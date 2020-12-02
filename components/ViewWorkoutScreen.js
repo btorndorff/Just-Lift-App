@@ -74,7 +74,7 @@ function ViewWorkoutScreen({navigation, route}) {
         setChecked(Checked + 1)
         getcurrentExercises().then(workout=> setWorkout(workout))
         getImage().then(x => {
-            if (x != "../assests/add.jpg" || x != null) {
+            if (x != "../assests/add.jpg") {
                 setImage(<Image source={{uri: x}} style={{width: 200, height: 200, marginTop: 50}} />)
             }
         })

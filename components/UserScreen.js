@@ -38,6 +38,7 @@ function UserScreen({navigation}) {
     const [NumFollowers, setNumFollowers] = useState(0)
     const [NumFollowing, setNumFollowing] = useState(0)
     const [Checked, setChecked] = useState(0)
+    const [Name, SetName] = useState();
 
     function getPosts(){
         var p;
@@ -111,8 +112,9 @@ function UserScreen({navigation}) {
         setChecked(Checked + 1);
         //getPosts().then(p => setPosts(p))
         getUser().then(p => {
+            SetName(p.name)
             console.log(p.avi)
-            if (p.avi != "../assets/add.jpg") {
+            if (p.avi != null) {
                 setSource(p.avi)
                 setAVI(<Image source={{uri: p.avi}} style={styles.avi} />)
             }
@@ -131,7 +133,8 @@ function UserScreen({navigation}) {
                         onPress={pickImage}
                         style={styles.avi}> 
                             {AVI}
-                    </TouchableOpacity> 
+                    </TouchableOpacity>
+                    <Text style={{fontSize: 30}}>{Name}</Text> 
                     {/*Followers,Following,Workouts*/}
                     <View style={styles.follows}>
                         <View style={styles.container}>
@@ -182,11 +185,12 @@ const styles = StyleSheet.create({
         height: 150,
         width: 150,
         borderRadius: 75,
+        marginBottom: 10,
     },
     follows: {
         flex: 1,
         flexDirection: "row",
-        top: 50,
+        top: 30,
         justifyContent: "space-around",
         marginBottom: 75,
     },
