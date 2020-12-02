@@ -16,12 +16,44 @@ import ChooseCategory from './ChooseCategory';
 import ExerciseNums from './ExerciseNums';
 import WorkoutCompleted from './WorkoutCompleted';
 import HomeScreen from './HomeScreen';
+import * as firebaseApp from 'firebase';
+import FriendScreen from "./FriendScreen";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
+  authDomain: "justliftapp-52af0.firebaseapp.com",
+  databaseURL: "https://justliftapp-52af0.firebaseio.com",
+  projectId: "justliftapp-52af0",
+  storageBucket: "justliftapp-52af0.appspot.com",
+  messagingSenderId: "459347127352",
+  appId: "1:459347127352:web:c4dc3739b2d35ce1dccacd",
+  measurementId: "G-KRT9MBHW9T"
+};
+// Initialize Firebase
+if (!firebaseApp.apps.length) {
+firebaseApp.initializeApp(config);
+}
+var database = firebaseApp.database();
+
+function getUser() {
+  var p;
+  if (firebaseApp.auth().currentUser.uid != null){
+      return firebaseApp.database().ref('users/' + firebaseApp.auth().currentUser.uid).once('value').then( function(snapshot){
+          p = snapshot.val();
+          return p;
+      })
+  }
+  return p;
+}
 
 function Feed() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <SocialScreen />
-      </View>
+      
+        <Stack.Navigator>
+          <Stack.Screen name="SocialScreen" component={SocialScreen} />
+          <Stack.Screen name="FriendScreen" component={FriendScreen} />
+        </Stack.Navigator>
+      
     );
   }
   
@@ -47,6 +79,7 @@ function Feed() {
           <Stack.Screen name="ExerciseNums" component={ExerciseNums} />
           <Stack.Screen name="WorkoutCompleted" component={WorkoutCompleted} />
           <Stack.Screen name="ChooseWorkoutScreen" component={ChooseWorkoutScreen} />
+          <Stack.Screen name="FriendScreen" component={FriendScreen} />
         </Stack.Navigator>
     );
   }
@@ -62,6 +95,7 @@ function Feed() {
           <Stack.Screen name="ChooseCategory" component={ChooseCategory} />
           <Stack.Screen name="ExerciseNums" component={ExerciseNums} />
           <Stack.Screen name="WorkoutCompleted" component={WorkoutCompleted} />
+          <Stack.Screen name="SocialScreen" component={SocialScreen} />
         </Stack.Navigator>
     );
   }
@@ -78,7 +112,21 @@ function Feed() {
   const Stack = createStackNavigator();
 
 export default class FeedScreen extends React.Component {
-    render(){
+  componentDidMount() {
+      getUser().then(x => {
+          if (x === null) {
+            let dest = 'users/' + firebaseApp.auth().currentUser.uid;
+            firebaseApp.database().ref(dest).set({
+              email: firebaseApp.auth().currentUser.email,
+              workouts: { temp: { name: "temp", exercises: { 0: { name: "temp", sets: 0, reps: 0, weight: 0 } } } },
+              social: { followers: { temp: "temp" }, following: { temp: "temp" } }, 
+              name: this.props.name,
+            });
+          }
+      })
+  }
+  
+  render(){
       return (
             <Tab.Navigator
                 screenOptions={({ route }) => ({

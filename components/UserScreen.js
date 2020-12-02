@@ -5,7 +5,10 @@ import Post from './Post';
 import Workout3View from './Workout3View'
 import * as Facebook from 'expo-facebook';
 import * as firebaseApp from 'firebase'
+import { useIsFocused } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
+import * as ImagePicker from 'expo-image-picker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -24,46 +27,140 @@ if (!firebaseApp.apps.length) {
 
 function UserScreen({navigation}) {
     const [User, setUser] = useState(firebaseApp.auth().currentUser);
-        
+    const [Posts, setPosts] = useState([])
+    var userid = 'none'
+    if (firebaseApp.auth().currentUser.uid) {
+        userid = firebaseApp.auth().currentUser.uid;
+    }
+    //const [Source, setSource] = useState()
+    //const [AVI, setAVI] = useState(<Image source={require("../assets/add.jpg")} style={styles.avi} />)
+    const [NumWorkouts, setNumWorkouts] = useState(0)
+    const [NumFollowers, setNumFollowers] = useState(0)
+    const [NumFollowing, setNumFollowing] = useState(0)
+    //const [Checked, setChecked] = useState(0)
+
+    function getPosts(){
+        var p;
+        var ids = [];
+        if (userid != null){
+            return firebaseApp.database().ref('users/' + userid + '/completed_workouts').once('value').then( function(snapshot){
+                p = snapshot.val();
+                for(const i in p) {
+                    /*getUser() 
+                        .then(x => {
+                            ids.push({name: p[i].name, volume: p[i].volume, date: p[i].date, image: p[i].image, description: p[i].description, workout: p[i].workout, username: x.name.first + " " + x.name.last});
+                        })*/
+                    ids.push({name: p[i].name, volume: p[i].volume, date: p[i].date, image: p[i].image, description: p[i].description, workout: p[i].workout});
+                }
+                return ids.reverse();
+            })
+        }
+        return ids;
+    }
+
+    function getUser() {
+        var p;
+        if (userid != null){
+            return firebaseApp.database().ref('users/' + userid).once('value').then( function(snapshot){
+                p = snapshot.val();
+                return p;
+            })
+        }
+        return p;
+    }
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+          setAVI(<Image source={{uri: result.uri}} style={styles.avi} />);
+          setSource(result.uri);
+          var postData = {
+            avi: Source
+          }
+          firebaseApp.database().ref('users/' + userid + '/avi').set(postData)
+        }
+    };
+    
     function logOut(){
         firebaseApp.auth().signOut()
             .then(setUser(null))
-            .then(navigation.navigate("HomeScreen"));
     }
 
+    if(useIsFocused()) {
+        getPosts().then(p => setPosts(p))
+        getUser().then(x => {
+            setNumWorkouts(Object.keys(x.workouts).length - 1)
+            setNumFollowers(Object.keys(x.social.followers).length - 1)
+            setNumFollowing(Object.keys(x.social.following).length - 1)
+        })
+        /*getUser().then(x => {
+            setSource(x.avi.avi)
+            if (Source != "../assets/add.jpg") {
+                setAVI(<Image source={{uri: x.avi.avi}} style={styles.avi} />)
+            }
+        })*/
+    }
+
+
+    /*if (Checked != 15) {
+        setChecked(Checked + 1);
+        //getPosts().then(p => setPosts(p))
+        getUser().then(p => {
+            setSource(p.avi.avi)
+            if (Source != "../assets/add.jpg") {
+                setAVI(<Image source={{uri: p.avi.avi}} style={styles.avi} />)
+            }
+        })
+    }*/
+
+    if (User === null) {
+        return (<HomeScreen />)
+    } else {
+        return (
+            <ScrollView style={{width:"100%"}}>
+                <View style={styles.container}>
+                    {/*AVI*/}
+                    <Button title="logout" onPress={()=> logOut()}/>
+                    <TouchableOpacity
+                        onPress={pickImage}
+                        style={styles.avi}> 
+                            {/*AVI*/}
+                    </TouchableOpacity> 
+                    {/*Followers,Following,Workouts*/}
+                    <View style={styles.follows}>
+                        <View style={styles.container}>
+                            <Text style={styles.followText}>{NumWorkouts}</Text>
+                            <Text style={styles.followText}>workouts</Text>
+                        </View>
+                        <View style={styles.container}>
+                            <Text style={styles.followText}>{NumFollowing}</Text>
+                            <Text style={styles.followText}>following</Text>
+                        </View>
+                        <View style={styles.container}>
+                            <Text style={styles.followText}>{NumFollowers}</Text>
+                            <Text style={styles.followText}>followers</Text>
+                        </View>
+                    </View>
     
-    return (
-        <ScrollView style={{width:"100%"}}>
-            <View style={styles.container}>
-                {/*AVI*/}
-                <Button title="logout" onPress={()=> logOut()}/>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>
-                {/*Followers,Following,Workouts*/}
-                <View style={styles.follows}>
-                    <View style={styles.container} onStartShouldSetResponder={() => navigation.navigate('ViewWorkoutScreen')}>
-                        <Text style={styles.followText}>4</Text>
-                        <Text style={styles.followText}>workouts</Text>
-                    </View>
-                    <View style={styles.container}>
-                        <Text style={styles.followText}>8</Text>
-                        <Text style={styles.followText}>following</Text>
-                    </View>
-                    <View style={styles.container}>
-                        <Text style={styles.followText}>9</Text>
-                        <Text style={styles.followText}>followers</Text>
-                    </View>
+                    {/*Workouts*/}
+                    <Workout3View navigation={navigation}/>
+    
+                    {/*Social Posts*/}
+                    <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
+                    {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={x.image} description={x.description} workout={x.workout} userid={userid}/>)}
                 </View>
-
-                {/*Workouts*/}
-                <Workout3View navigation={navigation}/>
-
-                {/*Social Posts*/}
-                <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Activity</Text>
-                <Post />
-                <Post />
-            </View>
-        </ScrollView>
-    );
+            </ScrollView>
+        );
+    }
+    
 }
 
 
@@ -83,7 +180,7 @@ const styles = StyleSheet.create({
         width: 50,
     },
     avi: {
-        top: "2%",
+        marginTop: "5%",
         height: 150,
         width: 150,
         borderRadius: 75,

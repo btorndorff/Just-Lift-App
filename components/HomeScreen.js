@@ -10,6 +10,7 @@ import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store';
 import * as firebaseApp from 'firebase'
 import {Container, Content, Header, Form, Input, Item, Button, Label} from 'native-base'
+import RegisterScreen from './RegisterScreen'
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -27,14 +28,15 @@ if (!firebaseApp.apps.length) {
 }
 var database = firebaseApp.database();
 
-export default class HomeScreen extends React.Component {
-
+export default class HomeScreen extends React.Component { 
   constructor(props) {
     super(props);
     let u = firebaseApp.auth().currentUser;
     this.state = ({
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
       loading: false,
       token: null,
       user: u
@@ -47,31 +49,21 @@ export default class HomeScreen extends React.Component {
         alert("Password must be at least 6 characters");
         return;
       }
-
       firebaseApp.auth().createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          console.log(user.user.uid)
-          firebaseApp.database().ref('users/' + user.user.uid).set({
-            email: user.user.email,
-            workouts: {
-              temp: {
-                name: "temp",
-                exercises: {
-                  0: {
-                    name: "temp",
-                    sets: 0,
-                    reps: 0,
-                    weight: 0
-                  }
-                }
-              }
-            }
-          })
+        .then((x) => {
+          console.log(x.user.uid)
+          /*let dest = 'users/' + firebaseApp.auth().currentUser.uid;
+          firebaseApp.database().ref(dest).set({
+            email: email,
+            workouts: { temp: { name: "temp", exercises: { 0: { name: "temp", sets: 0, reps: 0, weight: 0 } } } },
+            social: { followers: { temp: "temp" }, following: { temp: "temp" } } 
+          });*/
         })
     }
     catch (error) {
       console.log(error.toString())
     }
+    
   }
 
   loginUser = (email, password) => {
@@ -209,6 +201,18 @@ export default class HomeScreen extends React.Component {
             <Container style={{flex:1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
               <Form style={{width: "100%"}}>
                 <Item floatingLabel>
+                  <Label>First Name</Label>
+                  <Input autoCorrect={false} autoCapitalize="none"
+                    onChangeText={firstName => this.setState({firstName})}/>
+                </Item>
+                
+                <Item floatingLabel>
+                  <Label>Last Name</Label>
+                  <Input autoCorrect={false} autoCapitalize="none"
+                    onChangeText={lastName => this.setState({lastName})}/>
+                </Item>
+
+                <Item floatingLabel>
                   <Label>Email</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={email => this.setState({email})}/>
@@ -235,7 +239,7 @@ export default class HomeScreen extends React.Component {
         );
     }
     else{
-        return (<FeedScreen/>)
+        return (<FeedScreen name={this.state.firstName + " " + this.state.lastName}/>)
     }
   }
 }
