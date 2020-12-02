@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image} from 'react-native';
 
-function WorkoutPlaylistView({navigation, name, numExcs}) {
+function WorkoutPlaylistView({navigation, name, numExcs, image}) {
     return (
         <View style={styles.container} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen', {workout: name})} hitSlop={{top: -100, left: -100, bottom: -100, right: -100}}>
             <View style={styles.horContainer}>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb} />
+                <Image source={{uri: image}} style={styles.thumb} />
                 <View style={styles.container}>
                     <Text style={styles.leftText}>{name}</Text>
                     {/*<Text style={styles.leftText}>{numExcs - 1} Exercises</Text>*/}

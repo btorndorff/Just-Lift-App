@@ -21,6 +21,8 @@ if (!firebase.apps.length) {
 
 function ViewWorkoutScreen({navigation, route}) {
     const [Workout, setWorkout] = useState([])
+    const [image, setImage] = useState(<Image source={require("../assets/wallpaper5.jpg")} style={{width: 200, height: 200, marginTop: 50}} />)
+    const [Checked, setChecked] = useState(false)
     const {workout} = route.params;
 
     /*function getcurrentExercises(){
@@ -60,16 +62,28 @@ function ViewWorkoutScreen({navigation, route}) {
         //return "bad";
     }
 
+    function getImage() {
+        if (firebase.auth().currentUser.uid != null) {
+            return firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/workouts/' + workout + '/img').once('value').then( function(snapshot){
+                return snapshot.val();
+            })
+        }
+    }
+
+    if (Checked < 2) {
+        setChecked(Checked + 1)
+        getcurrentExercises().then(workout=> setWorkout(workout))
+        getImage().then(x => {
+            if (x != "../assests/add.jpg" || x != null) {
+                setImage(<Image source={{uri: x}} style={{width: 200, height: 200, marginTop: 50}} />)
+            }
+        })
+    }
+
     return (
         <ScrollView style={{width: "100%"}}>
             <View style={styles.container}>
-                <Image source={require('../assets/wallpaper5.jpg')} style={{height: 200, width: 200, marginTop: 50}}
-                    onLoad={() => {
-                        getcurrentExercises()
-                        .then(workout=> {
-                            setWorkout(workout)
-                        })
-                    }}/>
+                {image}
                 <Text style={{fontSize: 30}}>{workout}</Text>
                 <Button
                     onPress={() => {

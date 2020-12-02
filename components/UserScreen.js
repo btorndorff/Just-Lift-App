@@ -28,16 +28,16 @@ if (!firebaseApp.apps.length) {
 function UserScreen({navigation}) {
     const [User, setUser] = useState(firebaseApp.auth().currentUser);
     const [Posts, setPosts] = useState([])
-    var userid = 'none'
+    var userid = 'none';
     if (firebaseApp.auth().currentUser.uid) {
         userid = firebaseApp.auth().currentUser.uid;
     }
-    //const [Source, setSource] = useState()
-    //const [AVI, setAVI] = useState(<Image source={require("../assets/add.jpg")} style={styles.avi} />)
+    const [Source, setSource] = useState()
+    const [AVI, setAVI] = useState(<Image source={require("../assets/add.jpg")} style={styles.avi} />)
     const [NumWorkouts, setNumWorkouts] = useState(0)
     const [NumFollowers, setNumFollowers] = useState(0)
     const [NumFollowing, setNumFollowing] = useState(0)
-    //const [Checked, setChecked] = useState(0)
+    const [Checked, setChecked] = useState(0)
 
     function getPosts(){
         var p;
@@ -80,12 +80,9 @@ function UserScreen({navigation}) {
         console.log(result);
     
         if (!result.cancelled) {
-          setAVI(<Image source={{uri: result.uri}} style={styles.avi} />);
-          setSource(result.uri);
-          var postData = {
-            avi: Source
-          }
-          firebaseApp.database().ref('users/' + userid + '/avi').set(postData)
+          firebaseApp.database().ref('users/' + userid + '/avi').set(result.uri)
+          setSource(result.uri)
+          setAVI(<Image source={{uri: result.uri}} style={styles.avi} />)
         }
     };
     
@@ -110,16 +107,17 @@ function UserScreen({navigation}) {
     }
 
 
-    /*if (Checked != 15) {
+    if (Checked < 2) {
         setChecked(Checked + 1);
         //getPosts().then(p => setPosts(p))
         getUser().then(p => {
-            setSource(p.avi.avi)
-            if (Source != "../assets/add.jpg") {
-                setAVI(<Image source={{uri: p.avi.avi}} style={styles.avi} />)
+            console.log(p.avi)
+            if (p.avi != "../assets/add.jpg") {
+                setSource(p.avi)
+                setAVI(<Image source={{uri: p.avi}} style={styles.avi} />)
             }
         })
-    }*/
+    }
 
     if (User === null) {
         return (<HomeScreen />)
@@ -132,7 +130,7 @@ function UserScreen({navigation}) {
                     <TouchableOpacity
                         onPress={pickImage}
                         style={styles.avi}> 
-                            {/*AVI*/}
+                            {AVI}
                     </TouchableOpacity> 
                     {/*Followers,Following,Workouts*/}
                     <View style={styles.follows}>

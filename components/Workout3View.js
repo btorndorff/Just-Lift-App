@@ -32,7 +32,7 @@ function Workout3View({navigation}) {
                 let x = Object.keys(wks)
                 if(x.length > 1) {
                     for(const i in wks){
-                        ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
+                        ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length, image: wks[i].img});
                     }
                     ids.splice(ids.findIndex(x => x.name === 'temp'),1)
                     let t = ids;
@@ -87,7 +87,7 @@ function Workout3View({navigation}) {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View> */}
             <View style={styles.container}>
-                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs}/>)}
+                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs} image={x.image}/>)}
             </View>
             {/*See More*/}
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('EditScreen')}>

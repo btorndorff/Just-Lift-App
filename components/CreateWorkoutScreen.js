@@ -5,6 +5,7 @@ import ExercisePlaylistView from './ExercisePlaylistView'
 import * as firebase from 'firebase'
 import { useIsFocused } from '@react-navigation/native';
 import WorkoutPlaylistView from './WorkoutPlaylistView';
+import * as ImagePicker from 'expo-image-picker';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -22,6 +23,8 @@ if (!firebase.apps.length) {
 }
 
 function CreateWorkoutScreen({navigation , route}) {
+    const [image, setImage] = useState(<Image source={require("../assets/add.jpg")} style={{width: 200, height: 200, marginTop: 50}} />)
+    const [source, setSource] = useState('../assests/add.jpg')
     let made = false;
     const initial = {
         name: "temp",
@@ -79,6 +82,7 @@ function CreateWorkoutScreen({navigation , route}) {
     function updateWorkout(){
         var ids = [];
         let a = JSON.parse(JSON.stringify({
+            img: source,
             name: Workout.name,
             exercises: Workout.exercises
         }))
@@ -88,6 +92,22 @@ function CreateWorkoutScreen({navigation , route}) {
             firebase.database().ref('users/' + userid + '/workouts/' + Workout.name).set(a) 
         }
     }
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+          setSource(result.uri)
+          setImage(<Image source={{uri: result.uri}} style={{width: 200, height: 200, marginTop: 50}} />)
+        }
+    };
 
    /*if(useIsFocused() && Workout.name != undefined && Workout.name != 'temp') {
        let checked = false;
@@ -106,9 +126,10 @@ function CreateWorkoutScreen({navigation , route}) {
             <View style={styles.container} isfoc>
 
                 {/* add support for user to add custom image */}
-                <Image 
-                    source={require('../assets/add.jpg')} style={{height: 150, width: 150, marginTop: 50}}
-                />
+                <TouchableOpacity
+                        onPress={pickImage}> 
+                            {image}
+                </TouchableOpacity>
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
                     placeholder = "Title of Workout"
