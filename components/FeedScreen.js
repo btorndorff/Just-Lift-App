@@ -157,7 +157,7 @@ export default class FeedScreen extends React.Component {
                 <Tab.Screen name="Feed" component={Feed} />
                 <Tab.Screen name="Edit" component={Edit} />
                 <Tab.Screen name="Record" component={Record} />
-                <Tab.Screen name="Statistics" component={Statistics} />
+                {/*<Tab.Screen name="Statistics" component={Statistics} />*/}
                 <Tab.Screen name="Account" component={Account} />
             </Tab.Navigator>
       );
