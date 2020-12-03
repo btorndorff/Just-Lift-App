@@ -11,6 +11,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as firebaseApp from 'firebase'
 import {Container, Content, Header, Form, Input, Item, Button, Label} from 'native-base'
 import RegisterScreen from './RegisterScreen'
+import { FontAwesome } from '@expo/vector-icons';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -24,7 +25,7 @@ var firebaseConfig = {
   };
   // Initialize Firebase
 if (!firebaseApp.apps.length) {
-  firebaseApp.initializeApp(config);
+  firebaseApp.initializeApp(firebaseConfig);
 }
 var database = firebaseApp.database();
 
@@ -92,7 +93,7 @@ export default class HomeScreen extends React.Component {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user != null) {
         console.log('We are authenticated now!');
-        console.log('We authneticated with Fireabse!' + `Hi ${user.email}`);
+        console.log('We authneticated with Fireabse! ' + `Hi ${user.email}`);
         this.setState({user: firebaseApp.auth().currentUser})
       }
       else{
@@ -101,7 +102,36 @@ export default class HomeScreen extends React.Component {
     });
   }
 
+//   async Facebooklogin() {
+//     try{
+//       await Facebook.initializeAsync({appId : '576677119727703', appName : 'JustLift'});
 
+//       const { type, token } = await
+//         Facebook.logInWithReadPermissionsAsync(
+//         {
+//             permission: "public_profile"
+//         });
+//       if (type === "success") {
+
+//         const credential = firebaseApp.auth.FacebookAuthProvider.credential(token);
+
+//         firebaseApp
+//         .auth().signInWithCredential(credential).catch(error => {
+//           console.log('Auth failed and here is the error(1) ' + JSON.stringify(error))
+//         });
+//       }
+    
+//   }catch ({ message }) {
+//          alert(`Facebook Login Error: ${message}`);
+//   }
+// }
+  
+    
+ 
+    // if(this.state.loading === true){
+    //     return(<LoadingScreen/>)
+    // }
+    //else if(this.state.token === null){
   //Check Async Storage if token is available
   //If it is available set loading state to false 
   /*async checkForToken(){
@@ -135,10 +165,10 @@ export default class HomeScreen extends React.Component {
     
   render() {
     if(this.state.loading === true){
-        return(<LoadingScreen/>)
+      return(<LoadingScreen/>)
     }
     else if(this.state.user === null){
-        return (
+      return (
         /*<View style={styles.container}>
             <LinearGradient
             colors={['#D4EFF5', '#B4EDFF', '#026479']}
@@ -153,41 +183,57 @@ export default class HomeScreen extends React.Component {
             }}>
             <Image source={require("../assets/dumbell.png")} style={styles.logo} /> 
             <Text style={styles.instructions}>
-            JustLift
+              JustLift
             </Text>
             <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate('Login')} style={styles.button_login}>
-            <Text style={styles.buttonLText}>Login</Text>
+              onPress={() => this.props.navigation.navigate('Login')} style={styles.button_login}>
+              <Text style={styles.buttonLText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate('Register')} style={styles.button_register}>
-            <Text style={styles.buttonRText}>Register</Text>
+              onPress={() => this.props.navigation.navigate('Register')} style={styles.button_register}>
+              <Text style={styles.buttonRText}>Register</Text>
             </TouchableOpacity>
-              <Button title="Login With Facebook" onPress={()=>this.logIn()}/>
+            <TouchableOpacity 
+              onPress={()=>this.Facebooklogin()} style={styles.button_login}>
+              <Text style={styles.buttonLText}>Login With Facebook</Text>
+            </TouchableOpacity>
             </LinearGradient>
         </View>*/
+            
             <Container style={{flex:1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
+              <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
+            <Text style={styles1.toptitle}>JustLift</Text>
               <Form style={{width: "100%"}}>
                 <Item floatingLabel>
-                  <Label>First Name</Label>
+                  <Label style={styles1.iput}>First Name</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={firstName => this.setState({firstName})}/>
                 </Item>
                 
                 <Item floatingLabel>
-                  <Label>Last Name</Label>
+                  <Label style={styles1.iput}>Last Name</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={lastName => this.setState({lastName})}/>
                 </Item>
 
                 <Item floatingLabel>
-                  <Label>Email</Label>
+                  <Label style={styles1.iput}>Email</Label>
                   <Input autoCorrect={false} autoCapitalize="none"
                     onChangeText={email => this.setState({email})}/>
                 </Item>
 
                 <Item floatingLabel>
-                  <Label>Password</Label>
+                  <Label style={styles1.iput}>Password</Label>
                   <Input autoCorrect={false} autoCapitalize="none" secureTextEntry={true}
                     onChangeText={password => this.setState({password})}/>
                 </Item>
@@ -203,6 +249,7 @@ export default class HomeScreen extends React.Component {
                   <Text style={{color: 'white'}}>Register</Text>
                 </Button>
               </Form>
+              </LinearGradient>
             </Container>
         );
     }
@@ -253,4 +300,16 @@ export default class HomeScreen extends React.Component {
     }
   }
 }*/
+const styles1 = StyleSheet.create({
+  iput : {
+
+    color: "white"
+  },
+  toptitle :{
+
+    fontSize: 75,
+    fontWeight: "bold"
+  }
+});
+
 

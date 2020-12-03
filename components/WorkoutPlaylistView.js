@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
         minWidth: "90%",
         textAlign: "left",
         fontSize: 20,
+        color: "white",
+        fontWeight: "bold"
     },
     thumb: {
         height: 100,
@@ -42,7 +44,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
-        maxWidth: '100%'
+        maxWidth: '100%',
+        backgroundColor : "#42d1f5",
+        borderWidth: .5,
+        margin: 3
     },
     arrow: {
         height: 50,

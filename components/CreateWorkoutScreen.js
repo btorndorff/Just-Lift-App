@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 import { useIsFocused } from '@react-navigation/native';
 import WorkoutPlaylistView from './WorkoutPlaylistView';
 import * as ImagePicker from 'expo-image-picker';
+import { LinearGradient } from 'expo-linear-gradient';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -122,6 +123,17 @@ function CreateWorkoutScreen({navigation , route}) {
     }*/
 
     return (
+        <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
         <ScrollView style={{width: "100%"}}>
             <View style={styles.container} isfoc>
 
@@ -133,7 +145,7 @@ function CreateWorkoutScreen({navigation , route}) {
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
                     placeholder = "Title of Workout"
-                    placeholderTextColor = "#9a73ef"
+                    placeholderTextColor = "white"
                     autoCapitalize = "none"
                     onChangeText = {value => {
                         //update name of workout in database
@@ -161,11 +173,13 @@ function CreateWorkoutScreen({navigation , route}) {
                         <Text style={styles.buttonLText}>Add Excercise</Text>  
                     </TouchableOpacity> 
                 </View>
-                <Button
+                <TouchableOpacity
                     onPress={() => navigation.navigate('EditScreen')}
-                    title="Cancel"
-                    color="#841584"
-                />
+                    style={styles.button_login2}>
+
+                    <Text style={styles.buttonLText}>Cancel</Text>
+
+                </TouchableOpacity>                
                 <View style={styles.hContainer}>
                     <TouchableOpacity
                         //val is array of id and name for exercise categories
@@ -176,6 +190,7 @@ function CreateWorkoutScreen({navigation , route}) {
                 </View>
             </View>
         </ScrollView>
+        </LinearGradient>
     );
 }
 
@@ -205,9 +220,16 @@ const styles = StyleSheet.create({
     
       },
       button_login: {
-        backgroundColor: "black",
+        backgroundColor: "#505050",
         padding: 20,
-        borderRadius: 5,
+        borderRadius: 5, 
+        margin: 10
+      },
+      button_login2: {
+        backgroundColor: "#42d1f5",
+        padding: 20,
+        borderRadius: 5, 
+        margin: 10
       },
     horContainer: {
         flex: 1,
@@ -221,10 +243,13 @@ const styles = StyleSheet.create({
         //alignSelf: "bottom"
     },
     input: {
+        textAlign: "center",
         margin: 15,
-        height: 40,
-        borderColor: '#7a42f4',
-        borderWidth: 1
+        height: 60,
+        width: 175,
+        borderColor: 'white',
+        borderWidth: 1,
+        fontSize: 20
      },
       textInputContainer: {
         flexDirection: 'row',

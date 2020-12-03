@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as firebase from 'firebase'
 import { useIsFocused } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCTmakAv2P965rn8RXxfocQC9EDmfbtGik",
@@ -52,9 +53,21 @@ function EditScreen({navigation}) {
     }
 
     return (
+        <LinearGradient
+          colors={['#D4EFF5', '#B4EDFF', '#026479']}
+          start ={[1,1.4]}
+          end = {[0.1, 0.1]}
+          style={{
+            flex: 1, 
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: 'center', 
+            alignItems: 'center',
+          }}>
         <ScrollView style={{maxWidth: "100%"}}>
+            
             <View style={styles.container}>
-            <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Workouts</Text>
+            <Text style={{fontSize: 40, minWidth: "99%", textAlign: "center", margin: 30, fontWeight: "bold", color: "white"}}>Edit Workout</Text>
             {/*Create Workout*/}
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.navigate('CreateWorkoutScreen')}>
                 <Image source={require("../assets/add.jpg")} style={styles.thumb}/>
@@ -68,6 +81,8 @@ function EditScreen({navigation}) {
             </View>
         </View>
         </ScrollView>
+        </LinearGradient>
+
     );
 }
 
@@ -76,11 +91,17 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
-        alignSelf: "center"
+        alignSelf: "center",
+        margin: 10,
+        
     },
+    
     leftText: {
         minWidth: "90%",
         textAlign: "left",
+        fontSize: 20,
+        color: "white",
+        fontWeight: "bold"
     },
     thumb: {
         height: 100,
@@ -90,7 +111,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
-        maxWidth: '100%'
+        maxWidth: '100%',
+        margin: 10,
+        backgroundColor: "#505050",
+        borderWidth: .5
     },
     arrow: {
         height: 50,

@@ -57,41 +57,14 @@ function Workout3View({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 30, minWidth: "99%", textAlign: "left"}}>Workouts</Text>
+            <Text style={{fontSize: 40, minWidth: "99%", textAlign: "center", fontWeight: "bold", margin: 30, color: "white"}}>Select Workout</Text>
             
-            {/*first workout
-            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                <View style={styles.container}>
-                    <Text style={styles.leftText}>Pull Day</Text>
-                    <Text style={styles.leftText}>9 Exercises</Text>
-                </View>
-                <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
-            </View>
-            {/*second workout
-            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                <View style={styles.container}>
-                    <Text style={styles.leftText}>Pull Day</Text>
-                    <Text style={styles.leftText}>9 Exercises</Text>
-                </View>
-                <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
-            </View>
-            {/*third workout
-            <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('ViewWorkoutScreen')}>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.thumb}/>
-                <View style={styles.container}>
-                    <Text style={styles.leftText}>Pull Day</Text>
-                    <Text style={styles.leftText}>9 Exercises</Text>
-                </View>
-                <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
-            </View> */}
             <View style={styles.container}>
                 {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs} image={x.image}/>)}
             </View>
             {/*See More*/}
             <View style={styles.horContainer} onStartShouldSetResponder={() => navigation.push('EditScreen')}>
-                <Text style={{textAlign: "left",minWidth: "88%",alignSelf: "center", fontSize: 20}}>See More</Text>
+                <Text style={{textAlign: "left",minWidth: "73%",alignSelf: "center", fontSize: 20, margin: 20}}>See More</Text>
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
         </View>
@@ -103,7 +76,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
-        alignSelf: "center"
+        alignSelf: "center",
+        margin: 10,
+        
     },
     leftText: {
         minWidth: "90%",
@@ -117,6 +92,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
+        backgroundColor: "lightgray",
+        margin: 10 
     },
     arrow: {
         height: 50,
