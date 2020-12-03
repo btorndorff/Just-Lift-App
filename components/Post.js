@@ -22,12 +22,12 @@ if (!firebase.apps.length) {
 
 function Post(workout) {
     const [username, setUsername] = useState("Bob Dylan"); 
+    const [AVI, setAVI] = useState(<Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>)
+    const [Checked, setChecked] = useState(0)
     let image = <Image source={require("../assets/wallpaper5.jpg")} style={styles.ImageNone}/>
-    /*if (workout.image != "../assets/add.jpg") {
+    if (workout.image != "../assets/add.jpg") {
         image = <Image source={{uri: workout.image}} style={styles.Image}/>
-    }*/
-
-
+    }
 
     function getUser() {
         var p;
@@ -41,14 +41,22 @@ function Post(workout) {
         return p;
     }
 
-    if(useIsFocused()) {
-        getUser().then(p => setUsername(p.name))
+    if(Checked < 2) {
+        setChecked(Checked + 1)
+            getUser().then(p => {
+                setUsername(p.name)
+                if (workout.userid === firebase.auth().currentUser.uid) {
+                    if (p.avi != "../assets/add.jpg") {
+                        setAVI(<Image source={{uri: p.avi}} style={styles.avi} />)
+                    }
+                }
+            })
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.horContainer}>
-                <Image source={require("../assets/wallpaper5.jpg")} style={styles.avi}/>
+                {AVI}
                 <View style={{alignSelf: "center"}}>
                     <Text>{username}</Text>
                     <Text>{workout.date}</Text>
@@ -61,10 +69,10 @@ function Post(workout) {
                     <Text style={{textAlign: "left"}}>Workout</Text>
                     <Text style={{textAlign: "left", fontSize: 20}}>{workout.workout}</Text>
                 </View>
-                <View>
+                {/*<View>
                     <Text style={{textAlign: "left"}}>Time</Text>
                     <Text style={{textAlign: "left", fontSize: 20}}>58m 39s</Text>
-                </View>
+                </View>*/}
                 <View>
                     <Text style={{textAlign: "left"}}>Volume</Text>
                     <Text style={{textAlign: "left", fontSize: 20}}>{workout.volume + "lbs"}</Text>
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         backgroundColor: "#fff",
         padding: 10,
-        marginBottom: "10%",
+        marginBottom: "5%",
     },
     horContainer: {
         flex: 1,
@@ -92,9 +100,9 @@ const styles = StyleSheet.create({
     },
     horContainer2: {
         flex: 1,
-        width: "80%",
+        width: "100%",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
     },
     avi: {
         height: 50,

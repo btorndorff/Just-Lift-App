@@ -95,7 +95,7 @@ function SocialScreen({navigation}) {
                     <Text style={styles.ButtonText}>Add Friends</Text>
             </TouchableOpacity>
             <View style={styles.container}>
-                {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={x.image} description={x.description} workout={x.workout} avi={x.avi} userid={x.userid}/>)}
+                {Posts.map(x => <Post name={x.name} date={x.date} volume={x.volume} image={"../assets/add.jpg"} description={x.description} workout={x.workout} avi={x.avi} userid={x.userid}/>)}
             </View>
         </ScrollView>
         </LinearGradient>

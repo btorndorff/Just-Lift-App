@@ -34,7 +34,7 @@ function WorkoutCompleted({navigation, route}) {
 
         let d = new Date();
         let hour = d.getHours();
-        let M = "PM";
+        let M = "AM";
         if (hour === 12) {
             hour = 12;
         } else {
@@ -78,8 +78,8 @@ function WorkoutCompleted({navigation, route}) {
         console.log(result);
     
         if (!result.cancelled) {
-          setImage(<Image source={{uri: result.uri}} style={styles.thumb} />);
-          setSource(result.uri)
+            setImage(<Image source={{uri: result.uri}} style={styles.thumb} />);
+            setSource(result.uri)
         }
     };
 

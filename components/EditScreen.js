@@ -36,7 +36,7 @@ function EditScreen({navigation}) {
                 let x = Object.keys(wks)
                 if(x.length > 1) {
                     for(const i in wks){
-                        ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length});
+                        ids.push({name: wks[i].name, numExcs: Object.keys(wks[i]).length, image: wks[i].img});
                     }
                     console.log()
                     ids.splice(ids.findIndex(x => x.name === 'temp'),1)
@@ -77,7 +77,7 @@ function EditScreen({navigation}) {
                 <Image source={require("../assets/arrow.png")} style={styles.arrow}/>
             </View>
             <View style={styles.container}>
-                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs} />)}
+                {Workouts.map(x => <WorkoutPlaylistView navigation={navigation} name={x.name} numExcs={x.numExcs} image={x.image}/>)}
             </View>
         </View>
         </ScrollView>
